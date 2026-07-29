@@ -20,4 +20,7 @@ spec:
         - containerPort: 5001
         env:
         - name: MONGO_DB_URI
-          value: "mongodb+srv://admin:1234@cluster0.tul2h.mongodb.net/?retryWrites=true&w=majority"
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: MONGO_DB_URI
