@@ -90,6 +90,9 @@ const productSchema = mongoose.Schema({
   tags: [{
     type: String
   }],
+  embedding: {
+    type: [Number]
+  },
   createdAt: {
     type: Date,
     default: Date.now
