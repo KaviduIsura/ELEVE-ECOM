@@ -72,10 +72,21 @@ ${contextString}`;
 
     const aiMessage = completion.choices[0].message.content;
 
+    // 9. Filter recommended products to only those mentioned in the response
+    const mentionedProducts = topMatches.filter(p => aiMessage.toLowerCase().includes(p.name.toLowerCase()));
+
+    const structuredRecommendations = mentionedProducts.map((p) => ({
+      productId: p.productId,
+      name: p.name,
+      price: p.price,
+      image: p.images && p.images.length > 0 ? p.images[0] : null,
+      category: p.category
+    }));
+
     res.status(200).json({
       success: true,
       message: aiMessage,
-      recommendedProducts: topMatches.map((p) => p.name),
+      recommendedProducts: structuredRecommendations,
     });
   } catch (error) {
     console.error("Chat Controller Error:", error);
