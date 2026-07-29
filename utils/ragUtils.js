@@ -49,7 +49,12 @@ export function getProductTextForEmbedding(product) {
 export async function backfillEmbeddings() {
   console.log("Starting embedding backfill...");
   try {
-    const products = await Product.find({ embedding: { $exists: false } });
+    const products = await Product.find({ 
+      $or: [
+        { embedding: { $exists: false } },
+        { embedding: { $size: 0 } }
+      ]
+    });
     console.log(`Found ${products.length} products to backfill.`);
 
     for (const product of products) {
