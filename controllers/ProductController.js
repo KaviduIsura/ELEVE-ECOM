@@ -1,6 +1,7 @@
 import Product from "../models/Product.js";
 import Counter from "../models/Counter.js"; // Add this import
 import { isAdmin } from "./UserController.js";
+import { generateEmbedding, getProductTextForEmbedding } from "../utils/ragUtils.js";
 
 // Function to generate next product ID
 async function getNextSequenceValue(sequenceName) {
@@ -48,6 +49,15 @@ export async function createProduct(req, res) {
     // Set lastPrice if not provided
     if (!productData.lastPrice) {
       productData.lastPrice = productData.price;
+    }
+
+    // Generate AI Embedding for the new product
+    try {
+      const textForEmbedding = getProductTextForEmbedding(productData);
+      productData.embedding = await generateEmbedding(textForEmbedding);
+    } catch (err) {
+      console.error("Error generating embedding during product creation:", err);
+      // We can continue creating the product even if embedding fails
     }
 
     const product = new Product(productData);
@@ -254,6 +264,18 @@ export async function updateProduct(req, res) {
     // Don't allow updating productId (it's auto-generated and should be immutable)
     if (updateData.productId) {
       delete updateData.productId;
+    }
+
+    // Generate new AI Embedding for the updated product
+    try {
+      const existingProduct = await Product.findOne({ productId: productId });
+      if (existingProduct) {
+        const mergedProductData = { ...existingProduct.toObject(), ...updateData };
+        const textForEmbedding = getProductTextForEmbedding(mergedProductData);
+        updateData.embedding = await generateEmbedding(textForEmbedding);
+      }
+    } catch (err) {
+      console.error("Error generating embedding during product update:", err);
     }
 
     const updatedProduct = await Product.findOneAndUpdate(
