@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eleve-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: eleve-frontend
+  template:
+    metadata:
+      labels:
+        app: eleve-frontend
+    spec:
+      containers:
+      - name: eleve-frontend
+        image: eleveecom-frontend:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
