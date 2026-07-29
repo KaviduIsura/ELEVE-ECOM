@@ -8,6 +8,7 @@ import AdminHomePage from "./pages/adminHomePage";
 import { Toaster } from "react-hot-toast";
 import { CartProvider } from './context/CartContext';
 import ConfigProviderWrapper from './components/ConfigProviderWrapper';
+import Chatbot from './components/Chatbot';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <CartProvider>
         <BrowserRouter>
           <Toaster />
+          <Chatbot />
           <Routes>
             <Route path="/*" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
