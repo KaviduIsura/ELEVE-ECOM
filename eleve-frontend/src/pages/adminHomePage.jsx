@@ -26,6 +26,7 @@ import AdminOrdersPage from "./admin/AdminOrdersPage";
 import ProfilePage from "../components/admin/ProfilePage";
 import CustomersPage from "./admin/CustomersPage";
 import AdminsPage from "./admin/AdminsPage";
+import AdminDocumentsPage from "./admin/AdminDocumentsPage";
 
 const { Content } = Layout;
 
@@ -84,6 +85,7 @@ export default function AdminHomePage() {
             <Route path="/admins" element={<AdminsPage />} />
             <Route path="/admins/add" element={<AdminsPage />} />
             <Route path="/reviews" element={<AdminReviewPage />} />
+            <Route path="/documents" element={<AdminDocumentsPage />} />
 
             {/* Profile Page Route */}
             <Route path="/profile" element={<ProfilePage />} />

@@ -19,7 +19,8 @@ import {
   SearchOutlined,
   ProfileOutlined,
   KeyOutlined,
-  EditOutlined
+  EditOutlined,
+  FileTextOutlined
 } from "@ant-design/icons";
 import axios from 'axios';
 
@@ -204,6 +205,12 @@ const Sidebar = ({ collapsed, onLogoutClick }) => {
       icon: <BarChartOutlined className="text-lg" />,
       label: "Analytics",
       path: "/admin/analytics",
+    },
+    {
+      key: "documents",
+      icon: <FileTextOutlined className="text-lg" />,
+      label: "Knowledge Base",
+      path: "/admin/documents",
     },
     {
       key: "promotions",
