@@ -1,6 +1,6 @@
 // src/components/admin/dashboard/StatsCards.jsx
 import React from 'react';
-import { Card, Row, Col, Statistic, Typography } from 'antd';
+import { Card, Row, Col, Typography } from 'antd';
 import {
   DollarOutlined,
   ShoppingCartOutlined,
@@ -11,33 +11,33 @@ import {
 
 const { Title, Text } = Typography;
 
-const StatsCards = () => {
+const StatsCards = ({ stats }) => {
   const statsData = [
     {
       title: "Total Revenue",
-      value: 12450,
+      value: stats?.totalRevenue || 0,
       prefix: "$",
-      growth: "+12.5%",
+      growth: "+12.5%", // Mocked growth
       color: "#08979c",
       icon: <DollarOutlined />,
     },
     {
       title: "Total Orders",
-      value: 156,
+      value: stats?.totalOrders || 0,
       growth: "+8.2%",
       color: "#13c2c2",
       icon: <ShoppingCartOutlined />,
     },
     {
       title: "Total Customers",
-      value: 1248,
+      value: stats?.totalCustomers || 0,
       growth: "+15.3%",
       color: "#52c41a",
       icon: <UserOutlined />,
     },
     {
       title: "Conversion Rate",
-      value: 4.2,
+      value: stats?.conversionRate || 0,
       suffix: "%",
       growth: "+2.1%",
       color: "#fa8c16",

@@ -1,65 +1,32 @@
 // src/components/admin/dashboard/RecentOrders.jsx
 import React from 'react';
 import { Card, Table, Tag, Typography } from 'antd';
+import dayjs from 'dayjs';
 
 const { Title, Text } = Typography;
 
-const RecentOrders = () => {
-  const recentOrders = [
-    {
-      id: "#ORD-001",
-      customer: "John Smith",
-      amount: "$245.99",
-      status: "completed",
-      date: "2024-01-24",
-    },
-    {
-      id: "#ORD-002",
-      customer: "Sarah Johnson",
-      amount: "$129.50",
-      status: "pending",
-      date: "2024-01-24",
-    },
-    {
-      id: "#ORD-003",
-      customer: "Mike Wilson",
-      amount: "$89.99",
-      status: "processing",
-      date: "2024-01-23",
-    },
-    {
-      id: "#ORD-004",
-      customer: "Emily Davis",
-      amount: "$320.00",
-      status: "completed",
-      date: "2024-01-23",
-    },
-    {
-      id: "#ORD-005",
-      customer: "Robert Brown",
-      amount: "$65.50",
-      status: "cancelled",
-      date: "2024-01-22",
-    },
-  ];
-
+const RecentOrders = ({ orders = [] }) => {
   const columns = [
     {
       title: "Order ID",
-      dataIndex: "id",
-      key: "id",
-      render: (text) => <Text strong>{text}</Text>,
+      dataIndex: "orderId",
+      key: "orderId",
+      render: (text) => <Text strong className="text-slate-200">{text}</Text>,
     },
     {
       title: "Customer",
-      dataIndex: "customer",
       key: "customer",
+      render: (_, record) => (
+        <Text className="text-slate-300">
+          {record.shippingInfo?.firstName} {record.shippingInfo?.lastName}
+        </Text>
+      ),
     },
     {
       title: "Amount",
-      dataIndex: "amount",
-      key: "amount",
-      render: (text) => <Text strong className="text-green-600">{text}</Text>,
+      dataIndex: "total",
+      key: "total",
+      render: (total) => <Text strong className="text-cyan-400">${total?.toFixed(2)}</Text>,
     },
     {
       title: "Status",
@@ -71,13 +38,16 @@ const RecentOrders = () => {
           pending: { color: "orange", label: "Pending" },
           processing: { color: "blue", label: "Processing" },
           cancelled: { color: "red", label: "Cancelled" },
+          preparing: { color: "purple", label: "Preparing" },
+          shipped: { color: "cyan", label: "Shipped" },
+          delivered: { color: "success", label: "Delivered" }
         };
         const config = statusConfig[status] || {
           color: "default",
           label: status,
         };
         return (
-          <Tag color={config.color} className="px-3 py-1 rounded-full">
+          <Tag color={config.color} className="px-3 py-1 rounded-full uppercase text-xs">
             {config.label}
           </Tag>
         );
@@ -85,25 +55,26 @@ const RecentOrders = () => {
     },
     {
       title: "Date",
-      dataIndex: "date",
-      key: "date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (date) => <Text className="text-slate-400">{dayjs(date).format('MMM D, YYYY')}</Text>
     },
   ];
 
   return (
     <Card
-      title={<Title level={4} className="!text-slate-100">Recent Orders</Title>}
+      title={<Title level={4} className="!text-slate-100 !mb-0">Recent Orders</Title>}
       className="bg-slate-800 border-0 shadow-md"
       extra={
-        <a className="text-slate-300 hover:text-slate-100">View All</a>
+        <a href="/admin/orders" className="text-slate-300 hover:text-cyan-400">View All</a>
       }
     >
       <Table
         size="middle"
         columns={columns}
-        dataSource={recentOrders}
+        dataSource={orders}
         pagination={false}
-        rowKey="id"
+        rowKey="_id"
       />
     </Card>
   );
