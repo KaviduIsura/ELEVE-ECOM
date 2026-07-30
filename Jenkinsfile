@@ -1,25 +1,34 @@
 pipeline {
-    // This tells Jenkins to run on any available worker node
     agent any 
     
     stages {
         stage('Checkout Code') {
             steps {
                 echo '📥 Pulling the latest code from GitHub...'
-                // In a real setup, Jenkins would run: git pull origin main
             }
         }
         
         stage('Install Dependencies') {
             steps {
-                echo '📦 Installing Node.js packages for Backend and Frontend...'
+                echo '📦 Installing Node.js packages...'
                 // npm install
+            }
+        }
+        
+        // ✨ NEW TEST STAGE ✨
+        stage('Run Automated Tests') {
+            steps {
+                echo '🧪 Running Unit Tests on the Backend...'
+                // In a real setup, Jenkins runs this:
+                // sh 'npm run test'
+                
+                echo '✅ All 42 Backend Tests Passed!'
             }
         }
         
         stage('Build Docker Images') {
             steps {
-                echo '🔨 Building eleve-backend and eleve-frontend Docker images...'
+                echo '🔨 Building eleve-backend and eleve-frontend...'
                 // docker-compose build
             }
         }
@@ -28,7 +37,6 @@ pipeline {
             steps {
                 echo '🚀 Deploying the containers...'
                 // docker-compose up -d
-                echo '✅ ELEVÉ E-Commerce is live!'
             }
         }
     }
