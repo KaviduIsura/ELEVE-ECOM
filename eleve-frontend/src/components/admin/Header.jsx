@@ -116,30 +116,30 @@ const HeaderComponent = ({ collapsed, setCollapsed, setLogoutModalVisible }) => 
   );
 
   return (
-    <Header className="!p-0 !h-16 shadow-sm !bg-white !z-50">
+    <Header className="!p-0 !h-16 shadow-sm !bg-slate-900 !z-50">
       <div className="flex items-center justify-between h-full px-6">
         <div className="flex items-center">
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
-            className="mr-4 text-teal-700 hover:text-teal-800"
+            className="mr-4 text-slate-200 hover:text-slate-100"
           />
           <Divider type="vertical" className="h-6 mx-4" />
           <div className="ml-2">
             {loading ? (
               <div className="flex items-center">
-                <LoadingOutlined className="text-teal-600" />
-                <Text className="ml-2 text-teal-700">Loading...</Text>
+                <LoadingOutlined className="text-slate-300" />
+                <Text className="ml-2 text-slate-200">Loading...</Text>
               </div>
             ) : userData ? (
               <div className="flex flex-col">
-                <Text className="text-teal-700">
+                <Text className="text-slate-200">
                   Welcome back, <strong>{userData.firstName}</strong>
                 </Text>
               </div>
             ) : (
-              <Text className="text-teal-700">Welcome to Admin Panel</Text>
+              <Text className="text-slate-200">Welcome to Admin Panel</Text>
             )}
           </div>
         </div>
@@ -148,7 +148,7 @@ const HeaderComponent = ({ collapsed, setCollapsed, setLogoutModalVisible }) => 
           {/* User Menu */}
           {loading ? (
             <div className="flex items-center">
-              <Avatar size={36} icon={<LoadingOutlined />} className="border-2 border-teal-200" />
+              <Avatar size={36} icon={<LoadingOutlined />} className="border-2 border-slate-800" />
             </div>
           ) : userData ? (
             <Dropdown 
@@ -161,7 +161,7 @@ const HeaderComponent = ({ collapsed, setCollapsed, setLogoutModalVisible }) => 
                 <Avatar
                   size={36}
                   src={userData.profilePic || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"}
-                  className="flex-shrink-0 border-2 border-teal-400"
+                  className="flex-shrink-0 border-2 border-slate-800"
                 >
                   {!userData.profilePic && `${userData.firstName?.[0]}${userData.lastName?.[0]}`}
                 </Avatar>
@@ -169,13 +169,13 @@ const HeaderComponent = ({ collapsed, setCollapsed, setLogoutModalVisible }) => 
                   <div className="flex flex-col items-start min-w-0 ml-3">
                     <Text 
                       strong 
-                      className="text-teal-800 whitespace-nowrap overflow-hidden text-ellipsis max-w-[150px]"
+                      className="text-slate-100 whitespace-nowrap overflow-hidden text-ellipsis max-w-[150px]"
                       title={getUserDisplayName()}
                     >
                       {getUserDisplayName()}
                     </Text>
                     <Text 
-                      className="text-xs text-teal-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[150px]"
+                      className="text-xs text-slate-300 whitespace-nowrap overflow-hidden text-ellipsis max-w-[150px]"
                       title={getUserRole()}
                     >
                       {getUserRole()}
@@ -187,7 +187,7 @@ const HeaderComponent = ({ collapsed, setCollapsed, setLogoutModalVisible }) => 
           ) : (
             <Button
               type="primary"
-              className="bg-teal-600 border-0 hover:bg-teal-700"
+              className="bg-cyan-600 border-0 hover:bg-cyan-700"
               onClick={() => navigate('/login')}
             >
               Login

@@ -44,7 +44,7 @@ const PLACEHOLDER_IMAGE = "https://images.unsplash.com/photo-1556228578-9c360e1d
 const ImagePlaceholder = ({ size = "h-48", showLabel = true }) => (
   <div className={`flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 ${size}`}>
     <PictureOutlined className="mb-2 text-4xl text-gray-400" />
-    {showLabel && <p className="text-sm text-gray-500">No Image</p>}
+    {showLabel && <p className="text-sm text-slate-400">No Image</p>}
   </div>
 );
 
@@ -243,12 +243,12 @@ export default function AdminProductsPage() {
   );
 
   return (
-    <div className="min-h-screen p-4 bg-gray-50 md:p-6">
+    <div className="min-h-screen p-4 bg-slate-700 md:p-6">
       {/* Header */}
       <div className="flex flex-col items-start justify-between gap-4 mb-6 md:flex-row md:items-center">
         <div>
           <h1 className="text-2xl font-bold text-gray-800">Product Management</h1>
-          <p className="text-gray-500">Manage your store's product inventory</p>
+          <p className="text-slate-400">Manage your store's product inventory</p>
         </div>
         
         <Space>
@@ -316,7 +316,7 @@ export default function AdminProductsPage() {
               >
                 Refresh
               </Button>
-              <span className="text-gray-500">
+              <span className="text-slate-400">
                 Showing {filteredProducts.length} of {products.length} products
               </span>
             </Space>
@@ -336,7 +336,7 @@ export default function AdminProductsPage() {
           <Empty
             image={Empty.PRESENTED_IMAGE_SIMPLE}
             description={
-              <span className="text-gray-500">
+              <span className="text-slate-400">
                 {products.length === 0 ? "No products found. Add your first product!" : "No products match your filters"}
               </span>
             }
@@ -421,7 +421,7 @@ export default function AdminProductsPage() {
                           <Button 
                             type="text" 
                             size="small" 
-                            icon={<EllipsisOutlined className="text-gray-500" />}
+                            icon={<EllipsisOutlined className="text-slate-400" />}
                           />
                         </Dropdown>
                       </div>
@@ -443,14 +443,14 @@ export default function AdminProductsPage() {
                         
                         <div className="flex items-center justify-between pt-2 text-sm border-t border-gray-100">
                           <div className="flex items-center">
-                            <span className="mr-2 text-gray-500">Stock:</span>
+                            <span className="mr-2 text-slate-400">Stock:</span>
                             <span className={`font-medium ${product.stock > 0 ? "text-green-600" : "text-red-600"}`}>
                               {product.stock || 0}
                             </span>
                           </div>
                           <div className="flex items-center">
-                            <span className="mr-2 text-gray-500">ID:</span>
-                            <span className="px-2 py-1 font-mono text-xs bg-gray-100 rounded">
+                            <span className="mr-2 text-slate-400">ID:</span>
+                            <span className="px-2 py-1 font-mono text-xs bg-slate-800 rounded">
                               {product.productId}
                             </span>
                           </div>
@@ -518,16 +518,16 @@ export default function AdminProductsPage() {
                 icon={<PictureOutlined />}
               />
             ) : (
-              <div className="flex items-center justify-center w-16 h-16 bg-gray-100 rounded">
+              <div className="flex items-center justify-center w-16 h-16 bg-slate-800 rounded">
                 <PictureOutlined className="text-2xl text-gray-400" />
               </div>
             )}
             <div>
               <p className="font-medium text-gray-800">{productToDelete?.productName}</p>
-              <p className="text-sm text-gray-500">ID: {productToDelete?.productId}</p>
+              <p className="text-sm text-slate-400">ID: {productToDelete?.productId}</p>
             </div>
           </div>
-          <p className="text-gray-700">
+          <p className="text-slate-300">
             Are you sure you want to delete <strong>{productToDelete?.productName}</strong>?
           </p>
           <p className="text-sm text-red-500">

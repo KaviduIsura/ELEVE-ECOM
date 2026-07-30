@@ -98,11 +98,29 @@ const Sidebar = ({ collapsed, onLogoutClick }) => {
   // Fetch stats for sidebar
   const fetchStats = async () => {
     try {
-      // You would fetch real stats from your API
-      // For now, using mock data
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      
+      let activeOrders = 0;
+      let newReviews = 0;
+      
+      try {
+        const ordersRes = await axiosInstance.get('/api/orders');
+        if (ordersRes.data.orders) {
+          activeOrders = ordersRes.data.orders.filter(o => ['pending', 'processing', 'packed'].includes(o.status)).length;
+        }
+      } catch (err) { console.error(err); }
+      
+      try {
+        const reviewsRes = await axiosInstance.get('/api/reviews?status=pending');
+        if (reviewsRes.data.reviews) {
+          newReviews = reviewsRes.data.reviews.length;
+        }
+      } catch (err) { console.error(err); }
+
       setStats({
-        activeOrders: 12,
-        newReviews: 3
+        activeOrders,
+        newReviews
       });
     } catch (error) {
       console.error('Error fetching stats:', error);
@@ -262,7 +280,7 @@ const Sidebar = ({ collapsed, onLogoutClick }) => {
       style: {
         margin: '4px 8px',
         borderRadius: '8px',
-        backgroundColor: isActive ? 'rgba(8, 151, 156, 0.1)' : 'transparent',
+        backgroundColor: isActive ? 'rgba(19, 194, 194, 0.15)' : 'transparent',
       },
     };
   };
@@ -273,7 +291,7 @@ const Sidebar = ({ collapsed, onLogoutClick }) => {
       collapsedWidth={80}
       collapsible
       collapsed={collapsed}
-      className="shadow-lg transition-all duration-300 !bg-white !border-r !border-teal-100 flex flex-col"
+      className="shadow-lg transition-all duration-300 !bg-slate-900 !border-r !border-slate-800 flex flex-col"
       breakpoint="lg"
       trigger={null}
       style={{
@@ -287,24 +305,24 @@ const Sidebar = ({ collapsed, onLogoutClick }) => {
       }}
     >
       {/* Logo Section */}
-      <div className="p-6 border-b border-teal-100">
+      <div className="p-6 border-b border-slate-800">
         <div className="flex items-center justify-center">
           {!collapsed ? (
             <div className="flex items-center space-x-3">
-              <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-r from-teal-500 to-teal-600">
+              <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-r from-cyan-600 to-cyan-700">
                 <SafetyCertificateOutlined className="text-xl text-white" />
               </div>
               <div>
-                <Title level={4} className="!mb-0 !text-teal-800 !font-semibold">
+                <Title level={4} className="!mb-0 !text-slate-100 !font-semibold">
                   Elevé
                 </Title>
-                <Text className="text-xs font-medium text-teal-500">
+                <Text className="text-xs font-medium text-slate-400">
                   ADMIN PANEL
                 </Text>
               </div>
             </div>
           ) : (
-            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-r from-teal-500 to-teal-600">
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-r from-cyan-600 to-cyan-700">
               <SafetyCertificateOutlined className="text-xl text-white" />
             </div>
           )}
@@ -313,19 +331,19 @@ const Sidebar = ({ collapsed, onLogoutClick }) => {
 
       {/* User Profile */}
       {!collapsed ? (
-        <div className="p-4 mx-4 my-4 bg-teal-50 rounded-xl">
+        <div className="p-4 mx-4 my-4 bg-slate-800 rounded-xl">
           {loading ? (
             <div className="flex items-center space-x-3">
-              <Avatar size={40} className="bg-teal-100 border-2 border-white shadow-sm">
-                <UserOutlined className="text-teal-600" />
+              <Avatar size={40} className="bg-slate-700 border-2 border-slate-800 shadow-sm">
+                <UserOutlined className="text-slate-300" />
               </Avatar>
               <div>
-                <Text strong className="!text-teal-800 text-sm">
+                <Text strong className="!text-slate-100 text-sm">
                   Loading...
                 </Text>
                 <div className="flex items-center">
                   <div className="w-2 h-2 mr-2 bg-gray-400 rounded-full"></div>
-                  <Text className="text-xs text-teal-500">
+                  <Text className="text-xs text-slate-400">
                     Loading role...
                   </Text>
                 </div>
@@ -337,17 +355,17 @@ const Sidebar = ({ collapsed, onLogoutClick }) => {
                 <Avatar
                   size={40}
                   src={userData.profilePic}
-                  className="bg-teal-100 border-2 border-white shadow-sm"
+                  className="bg-slate-700 border-2 border-slate-800 shadow-sm"
                 >
                   {getUserInitials()}
                 </Avatar>
                 <div>
-                  <Text strong className="!text-teal-800 text-sm block">
+                  <Text strong className="!text-slate-100 text-sm block">
                     {getUserDisplayName()}
                   </Text>
                   <div className="flex items-center">
                     <div className="w-2 h-2 mr-2 bg-green-400 rounded-full"></div>
-                    <Text className="text-xs text-teal-500">
+                    <Text className="text-xs text-slate-400">
                       {getUserRole()}
                     </Text>
                   </div>
@@ -355,13 +373,13 @@ const Sidebar = ({ collapsed, onLogoutClick }) => {
               </div>
               
               {/* Quick Profile Actions */}
-              <div className="flex items-center justify-between pt-2 mt-2 border-t border-teal-100">
+              <div className="flex items-center justify-between pt-2 mt-2 border-t border-slate-800">
                 <Button 
                   type="text" 
                   size="small" 
                   icon={<EditOutlined />}
                   onClick={() => navigate('/admin/profile')}
-                  className="text-teal-600 hover:text-teal-700 hover:bg-teal-100"
+                  className="text-slate-300 hover:text-slate-200 hover:bg-slate-700"
                 >
                   Edit Profile
                 </Button>
@@ -370,7 +388,7 @@ const Sidebar = ({ collapsed, onLogoutClick }) => {
                   size="small" 
                   icon={<KeyOutlined />}
                   onClick={() => navigate('/admin/profile?tab=password')}
-                  className="text-teal-600 hover:text-teal-700 hover:bg-teal-100"
+                  className="text-slate-300 hover:text-slate-200 hover:bg-slate-700"
                 >
                   Change Password
                 </Button> */}
@@ -378,18 +396,18 @@ const Sidebar = ({ collapsed, onLogoutClick }) => {
             </div>
           ) : (
             <div className="flex items-center space-x-3">
-              <Avatar size={40} className="bg-teal-100 border-2 border-white shadow-sm">
-                <UserOutlined className="text-teal-600" />
+              <Avatar size={40} className="bg-slate-700 border-2 border-slate-800 shadow-sm">
+                <UserOutlined className="text-slate-300" />
               </Avatar>
               <div>
-                <Text strong className="!text-teal-800 text-sm">
+                <Text strong className="!text-slate-100 text-sm">
                   Not Logged In
                 </Text>
                 <Button 
                   type="link" 
                   size="small" 
                   onClick={() => navigate('/login')}
-                  className="!p-0 !h-auto text-teal-600 hover:text-teal-700"
+                  className="!p-0 !h-auto text-slate-300 hover:text-slate-200"
                 >
                   Click to Login
                 </Button>
@@ -400,8 +418,8 @@ const Sidebar = ({ collapsed, onLogoutClick }) => {
       ) : (
         <div className="flex justify-center my-4">
           {loading ? (
-            <Avatar size={40} className="bg-teal-100 border-2 border-white shadow-sm">
-              <UserOutlined className="text-teal-600" />
+            <Avatar size={40} className="bg-slate-700 border-2 border-slate-800 shadow-sm">
+              <UserOutlined className="text-slate-300" />
             </Avatar>
           ) : userData ? (
             <Dropdown 
@@ -416,7 +434,7 @@ const Sidebar = ({ collapsed, onLogoutClick }) => {
               <Avatar
                 size={40}
                 src={userData.profilePic}
-                className="bg-teal-100 border-2 border-white shadow-sm cursor-pointer"
+                className="bg-slate-700 border-2 border-slate-800 shadow-sm cursor-pointer"
               >
                 {getUserInitials()}
               </Avatar>
@@ -424,10 +442,10 @@ const Sidebar = ({ collapsed, onLogoutClick }) => {
           ) : (
             <Avatar 
               size={40} 
-              className="bg-teal-100 border-2 border-white shadow-sm cursor-pointer"
+              className="bg-slate-700 border-2 border-slate-800 shadow-sm cursor-pointer"
               onClick={() => navigate('/login')}
             >
-              <UserOutlined className="text-teal-600" />
+              <UserOutlined className="text-slate-300" />
             </Avatar>
           )}
         </div>
@@ -461,23 +479,23 @@ const Sidebar = ({ collapsed, onLogoutClick }) => {
       </div>
 
       {/* Bottom Section */}
-      <div className="mt-auto border-t border-teal-100">
+      <div className="mt-auto border-t border-slate-800">
         {/* Quick Stats */}
         {!collapsed && (
-          <div className="p-4 mx-4 my-4 bg-gradient-to-r from-teal-50 to-teal-100 rounded-xl">
+          <div className="p-4 mx-4 my-4 bg-gradient-to-r from-slate-800 to-slate-700 rounded-xl">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Text className="text-xs text-teal-600">Active Orders</Text>
+                <Text className="text-xs text-slate-300">Active Orders</Text>
                 <Badge count={stats.activeOrders} size="small" style={{ backgroundColor: '#08979c' }} />
               </div>
               <div className="flex items-center justify-between">
-                <Text className="text-xs text-teal-600">New Reviews</Text>
+                <Text className="text-xs text-slate-300">New Reviews</Text>
                 <Badge count={stats.newReviews} size="small" style={{ backgroundColor: '#08979c' }} />
               </div>
               {userData && (
-                <div className="flex items-center justify-between pt-2 mt-2 border-t border-teal-200">
-                  <Text className="text-xs text-teal-600">Last Login</Text>
-                  <Text className="text-xs font-medium text-teal-700">
+                <div className="flex items-center justify-between pt-2 mt-2 border-t border-slate-800">
+                  <Text className="text-xs text-slate-300">Last Login</Text>
+                  <Text className="text-xs font-medium text-slate-200">
                     {userData.lastLogin ? new Date(userData.lastLogin).toLocaleDateString() : 'Today'}
                   </Text>
                 </div>
@@ -490,10 +508,10 @@ const Sidebar = ({ collapsed, onLogoutClick }) => {
         {collapsed && (
           <div className="flex flex-col items-center px-2 py-4 space-y-4">
             <Badge count={stats.activeOrders} size="small" style={{ backgroundColor: '#08979c' }}>
-              <ShoppingCartOutlined className="text-lg text-teal-600" />
+              <ShoppingCartOutlined className="text-lg text-slate-300" />
             </Badge>
             <Badge count={stats.newReviews} size="small" style={{ backgroundColor: '#08979c' }}>
-              <BellOutlined className="text-lg text-teal-600" />
+              <BellOutlined className="text-lg text-slate-300" />
             </Badge>
           </div>
         )}
@@ -506,7 +524,7 @@ const Sidebar = ({ collapsed, onLogoutClick }) => {
               danger
               icon={<LogoutOutlined />}
               onClick={onLogoutClick}
-              className="w-full text-red-500 border-teal-200 hover:border-red-300 hover:bg-red-50 hover:text-red-600"
+              className="w-full text-red-500 border-slate-800 hover:border-red-300 hover:bg-red-50 hover:text-red-600"
               size="large"
               loading={loading}
             >

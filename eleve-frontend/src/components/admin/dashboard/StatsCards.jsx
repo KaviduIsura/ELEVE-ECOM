@@ -50,13 +50,13 @@ const StatsCards = () => {
       {statsData.map((stat, index) => (
         <Col key={index} xs={24} sm={12} lg={6}>
           <Card
-            className="transition-all duration-300 bg-white border-0 shadow-md hover:shadow-lg"
+            className="transition-all duration-300 bg-slate-800 border-0 shadow-md hover:shadow-lg"
             bodyStyle={{ padding: '20px' }}
           >
             <div className="flex items-start justify-between">
               <div>
-                <Text className="text-teal-600">{stat.title}</Text>
-                <Title level={2} className="!mt-2 !mb-1 !text-teal-800">
+                <Text className="text-slate-300">{stat.title}</Text>
+                <Title level={2} className="!mt-2 !mb-1 !text-slate-100">
                   {stat.prefix}
                   {stat.value.toLocaleString()}
                   {stat.suffix}
@@ -66,7 +66,7 @@ const StatsCards = () => {
                   <Text strong className="text-green-500">
                     {stat.growth}
                   </Text>
-                  <Text className="ml-2 text-teal-500">
+                  <Text className="ml-2 text-slate-400">
                     from last month
                   </Text>
                 </div>

@@ -99,7 +99,7 @@ export default function AdminDocumentsPage() {
       title: 'Title',
       dataIndex: 'title',
       key: 'title',
-      render: (text) => <Text strong className="text-teal-700">{text}</Text>,
+      render: (text) => <Text strong className="text-slate-200">{text}</Text>,
     },
     {
       title: 'Content Snippet',
@@ -144,10 +144,10 @@ export default function AdminDocumentsPage() {
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <Title level={2} className="!mb-1 !text-teal-800">
+          <Title level={2} className="!mb-1 !text-slate-100">
             AI Knowledge Base
           </Title>
-          <Text className="text-teal-600">
+          <Text className="text-slate-300">
             Manage custom documents (Policies, FAQs) that the ELEVÉ Chatbot uses to answer questions.
           </Text>
         </div>
@@ -155,7 +155,7 @@ export default function AdminDocumentsPage() {
           type="primary"
           icon={<PlusOutlined />}
           size="large"
-          className="bg-teal-600 hover:bg-teal-700 shadow-md"
+          className="bg-cyan-600 hover:bg-cyan-700 shadow-md"
           onClick={() => setModalVisible(true)}
         >
           Add Document
@@ -163,7 +163,7 @@ export default function AdminDocumentsPage() {
       </div>
 
       {/* Main Card */}
-      <Card className="shadow-sm rounded-xl border-teal-100">
+      <Card className="shadow-sm rounded-xl border-slate-700">
         <Table
           columns={columns}
           dataSource={documents}
@@ -176,7 +176,7 @@ export default function AdminDocumentsPage() {
       {/* Add Document Modal */}
       <Modal
         title={
-          <div className="flex items-center space-x-2 text-teal-800">
+          <div className="flex items-center space-x-2 text-slate-100">
             <FileTextOutlined className="text-xl" />
             <span>Add New Knowledge Base Document</span>
           </div>
@@ -189,8 +189,8 @@ export default function AdminDocumentsPage() {
         footer={null}
         destroyOnClose
       >
-        <div className="mb-6 p-4 bg-teal-50 rounded-lg border border-teal-100">
-          <Text className="text-teal-700 text-sm">
+        <div className="mb-6 p-4 bg-slate-800 rounded-lg border border-slate-700">
+          <Text className="text-slate-200 text-sm">
             When you save this document, the backend will automatically send this text to OpenAI to generate a vector embedding. This allows the chatbot to retrieve this information instantly when customers ask related questions.
           </Text>
         </div>
@@ -202,7 +202,7 @@ export default function AdminDocumentsPage() {
         >
           <Form.Item
             name="title"
-            label={<span className="text-teal-800 font-medium">Document Title (e.g., Return Policy)</span>}
+            label={<span className="text-slate-100 font-medium">Document Title (e.g., Return Policy)</span>}
             rules={[{ required: true, message: 'Please enter a title' }]}
           >
             <Input placeholder="Enter document title..." size="large" />
@@ -210,7 +210,7 @@ export default function AdminDocumentsPage() {
 
           <Form.Item
             name="content"
-            label={<span className="text-teal-800 font-medium">Document Content</span>}
+            label={<span className="text-slate-100 font-medium">Document Content</span>}
             rules={[{ required: true, message: 'Please enter the content' }]}
           >
             <TextArea 
@@ -229,7 +229,7 @@ export default function AdminDocumentsPage() {
                 type="primary" 
                 htmlType="submit" 
                 loading={submitting}
-                className="bg-teal-600 hover:bg-teal-700"
+                className="bg-cyan-600 hover:bg-cyan-700"
               >
                 Save & Embed Document
               </Button>

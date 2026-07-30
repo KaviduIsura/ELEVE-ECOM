@@ -92,10 +92,10 @@ const RecentOrders = () => {
 
   return (
     <Card
-      title={<Title level={4} className="!text-teal-800">Recent Orders</Title>}
-      className="bg-white border-0 shadow-md"
+      title={<Title level={4} className="!text-slate-100">Recent Orders</Title>}
+      className="bg-slate-800 border-0 shadow-md"
       extra={
-        <a className="text-teal-600 hover:text-teal-800">View All</a>
+        <a className="text-slate-300 hover:text-slate-100">View All</a>
       }
     >
       <Table

@@ -11,13 +11,13 @@ const DashboardPage = () => {
   return (
     <div className="space-y-6">
       {/* Welcome Header */}
-      <Card className="border-0 shadow-md bg-gradient-to-r from-teal-50 to-white">
+      <Card className="border-0 shadow-md bg-gradient-to-r from-slate-800 to-slate-900">
         <Row align="middle">
           <Col xs={24} md={16}>
-            <Title level={3} className="!text-teal-800">
+            <Title level={3} className="!text-slate-100">
               Welcome back, Alexander! 👋
             </Title>
-            <Text className="text-teal-600">
+            <Text className="text-slate-300">
               Here's what's happening with your store today. You have 12 new
               orders, 3 new reviews, and 5 new customers.
             </Text>
@@ -26,7 +26,7 @@ const DashboardPage = () => {
             <Button
               type="primary"
               size="large"
-              className="border-0 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700"
+              className="border-0 bg-gradient-to-r from-cyan-600 to-cyan-700 hover:from-cyan-700 hover:to-cyan-800"
             >
               View Reports
             </Button>
@@ -44,11 +44,11 @@ const DashboardPage = () => {
         </Col>
         <Col xs={24} lg={8}>
           <Card
-            title={<Title level={4} className="!text-teal-800">Top Products</Title>}
-            className="bg-white border-0 shadow-md"
+            title={<Title level={4} className="!text-slate-100">Top Products</Title>}
+            className="bg-slate-800 border-0 shadow-md"
           >
             {/* Add Top Products List here */}
-            <div className="py-8 text-center text-teal-600">
+            <div className="py-8 text-center text-slate-300">
               Top Products List
             </div>
           </Card>

@@ -3,10 +3,11 @@ import { MessageCircle, X, Send, ExternalLink } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Chatbot = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
@@ -22,6 +23,11 @@ const Chatbot = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  // Don't render chatbot on admin pages
+  if (location.pathname.startsWith('/admin')) {
+    return null;
+  }
 
   const handleSend = async () => {
     if (!input.trim()) return;
