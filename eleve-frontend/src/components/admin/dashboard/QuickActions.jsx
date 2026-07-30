@@ -55,8 +55,8 @@ const QuickActions = () => {
 
   return (
     <Card
-      title={<Text strong className="text-teal-800">Quick Actions</Text>}
-      className="bg-white border-0 shadow-md"
+      title={<Text strong className="text-slate-100">Quick Actions</Text>}
+      className="bg-slate-800 border-0 shadow-md"
     >
       <Row gutter={[16, 16]}>
         {actions.map((action, index) => (
@@ -65,7 +65,7 @@ const QuickActions = () => {
               <Link to={action.to}>
                 <Card
                   hoverable
-                  className="text-center transition-all duration-300 bg-white border border-teal-200 hover:border-teal-400 hover:scale-105"
+                  className="text-center transition-all duration-300 bg-slate-800 border border-slate-700 hover:border-slate-600 hover:scale-105"
                   bodyStyle={{ padding: '16px' }}
                 >
                   <div
@@ -74,7 +74,7 @@ const QuickActions = () => {
                   >
                     {action.icon}
                   </div>
-                  <Text strong className="text-teal-800">
+                  <Text strong className="text-slate-100">
                     {action.label}
                   </Text>
                 </Card>

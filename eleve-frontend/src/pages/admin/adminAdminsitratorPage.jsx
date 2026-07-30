@@ -16,10 +16,10 @@ export default function AdminAdminstratorPage() {
   }, [userLoaded]);
 
   return (
-    <div className="p-8 min-h-screen bg-gray-100 relative">
+    <div className="p-8 min-h-screen bg-slate-800 relative">
       <Link
         to={"/admin/admin/addAdmin"}
-        className="absolute bottom-[25px] right-[25px] text-[25px] bg-white p-4 rounded-full text-blue-900 border-blue-900 border-2 hover:bg-blue-100 shadow-lg"
+        className="absolute bottom-[25px] right-[25px] text-[25px] bg-slate-800 p-4 rounded-full text-blue-900 border-blue-900 border-2 hover:bg-blue-100 shadow-lg"
       >
         <FaPlus />
       </Link>
@@ -27,7 +27,7 @@ export default function AdminAdminstratorPage() {
         All Administrator Page
       </h1>
       {userLoaded ? (
-        <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
+        <div className="overflow-x-auto bg-slate-800 shadow-lg rounded-lg">
           <table className="w-full border-collapse border border-gray-300">
             <thead>
               <tr className="bg-blue-900 text-white">
@@ -55,22 +55,22 @@ export default function AdminAdminstratorPage() {
                   <tr
                     key={index}
                     className={`${
-                      index % 2 === 0 ? "bg-gray-100" : "bg-white"
+                      index % 2 === 0 ? "bg-slate-800" : "bg-slate-800"
                     } hover:bg-gray-200 transition-colors`}
                   >
-                    <td className="border border-gray-300 px-4 py-3 text-sm text-gray-700">
+                    <td className="border border-gray-300 px-4 py-3 text-sm text-slate-300">
                       {user.email}
                     </td>
-                    <td className="border border-gray-300 px-4 py-3 text-sm text-gray-700">
+                    <td className="border border-gray-300 px-4 py-3 text-sm text-slate-300">
                       {user.firstName}
                     </td>
-                    <td className="border border-gray-300 px-4 py-3 text-sm text-gray-700">
+                    <td className="border border-gray-300 px-4 py-3 text-sm text-slate-300">
                       {user.lastName}
                     </td>
-                    <td className="border border-gray-300 px-4 py-3 text-sm text-gray-700 capitalize">
+                    <td className="border border-gray-300 px-4 py-3 text-sm text-slate-300 capitalize">
                       {user.type}
                     </td>
-                    <td className="border border-gray-300 px-4 py-3 text-sm text-gray-700">
+                    <td className="border border-gray-300 px-4 py-3 text-sm text-slate-300">
                       <img
                         src={user.profilePic}
                         alt={`${user.firstName} ${user.lastName}`}

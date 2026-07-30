@@ -429,19 +429,19 @@ const AdminsPage = () => {
           <Avatar
             src={record.profilePic}
             icon={<UserOutlined />}
-            className="mr-3 border border-teal-100"
+            className="mr-3 border border-slate-800"
             size="large"
           >
             {record.firstName?.[0]}{record.lastName?.[0]}
           </Avatar>
           <div>
-            <div className="font-medium text-teal-800">
+            <div className="font-medium text-slate-100">
               {record.firstName} {record.lastName}
               {record.isSuperAdmin && (
                 <CrownOutlined className="ml-2 text-yellow-500" />
               )}
             </div>
-            <div className="text-sm text-teal-600">
+            <div className="text-sm text-slate-300">
               {record.email}
             </div>
           </div>
@@ -491,7 +491,7 @@ const AdminsPage = () => {
       render: (_, record) => (
         <div>
           {record.permissions?.length > 0 ? (
-            <Text className="text-xs text-teal-600">
+            <Text className="text-xs text-slate-300">
               {record.permissions.length} permission(s)
             </Text>
           ) : (
@@ -507,8 +507,8 @@ const AdminsPage = () => {
       width: 120,
       render: (date) => (
         <div>
-          <div className="text-teal-800">{dayjs(date).format('MMM D, YYYY')}</div>
-          <div className="text-xs text-teal-500">{dayjs(date).fromNow()}</div>
+          <div className="text-slate-100">{dayjs(date).format('MMM D, YYYY')}</div>
+          <div className="text-xs text-slate-400">{dayjs(date).fromNow()}</div>
         </div>
       ),
     },
@@ -523,7 +523,7 @@ const AdminsPage = () => {
               type="text"
               icon={<EyeOutlined />}
               onClick={() => viewAdminDetails(record._id)}
-              className="text-teal-600 hover:text-teal-700"
+              className="text-slate-300 hover:text-slate-200"
               size="small"
             />
           </Tooltip>
@@ -595,7 +595,7 @@ const AdminsPage = () => {
             <Button
               type="text"
               icon={<MoreOutlined />}
-              className="text-gray-600 hover:text-gray-700"
+              className="text-gray-600 hover:text-slate-300"
               size="small"
             />
           </Dropdown>
@@ -664,10 +664,10 @@ const AdminsPage = () => {
       {/* Header */}
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
         <div>
-          <Title level={2} className="!text-teal-800">
+          <Title level={2} className="!text-slate-100">
             Admin Management
           </Title>
-          <Text className="text-teal-600">
+          <Text className="text-slate-300">
             Manage administrative accounts and permissions
           </Text>
         </div>
@@ -679,7 +679,7 @@ const AdminsPage = () => {
               fetchAdminStats();
             }}
             loading={loading}
-            className="text-teal-600 border-teal-200 hover:text-teal-700 hover:border-teal-300"
+            className="text-slate-300 border-slate-700 hover:text-slate-200 hover:border-slate-600"
           >
             Refresh
           </Button>
@@ -687,7 +687,7 @@ const AdminsPage = () => {
             icon={<DownloadOutlined />}
             onClick={exportAdmins}
             loading={exportLoading}
-            className="text-teal-600 border-teal-200 hover:text-teal-700 hover:border-teal-300"
+            className="text-slate-300 border-slate-700 hover:text-slate-200 hover:border-slate-600"
           >
             Export
           </Button>
@@ -695,7 +695,7 @@ const AdminsPage = () => {
             type="primary"
             icon={<PlusOutlined />}
             onClick={() => setAddModalVisible(true)}
-            className="bg-teal-600 border-0 hover:bg-teal-700"
+            className="bg-cyan-600 border-0 hover:bg-cyan-700"
           >
             Add New Admin
           </Button>
@@ -705,37 +705,37 @@ const AdminsPage = () => {
       {/* Stats Cards */}
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={12} md={6}>
-          <Card className="transition-shadow bg-white border-0 shadow-sm hover:shadow-md">
+          <Card className="transition-shadow bg-slate-800 border-0 shadow-sm hover:shadow-md">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-2xl font-bold text-teal-800">
+                <div className="text-2xl font-bold text-slate-100">
                   {stats.total}
                 </div>
-                <div className="text-sm text-teal-600">
+                <div className="text-sm text-slate-300">
                   Total Admins
                 </div>
-                <div className="mt-1 text-xs text-teal-500">
+                <div className="mt-1 text-xs text-slate-400">
                   All administrative accounts
                 </div>
               </div>
-              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-teal-50">
-                <TeamOutlined className="text-xl text-teal-600" />
+              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-slate-800">
+                <TeamOutlined className="text-xl text-slate-300" />
               </div>
             </div>
           </Card>
         </Col>
 
         <Col xs={24} sm={12} md={6}>
-          <Card className="transition-shadow bg-white border-0 shadow-sm hover:shadow-md">
+          <Card className="transition-shadow bg-slate-800 border-0 shadow-sm hover:shadow-md">
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-2xl font-bold text-green-600">
                   {stats.active}
                 </div>
-                <div className="text-sm text-teal-600">
+                <div className="text-sm text-slate-300">
                   Active Admins
                 </div>
-                <div className="mt-1 text-xs text-teal-500">
+                <div className="mt-1 text-xs text-slate-400">
                   {stats.activePercentage}% of total
                 </div>
               </div>
@@ -747,16 +747,16 @@ const AdminsPage = () => {
         </Col>
 
         <Col xs={24} sm={12} md={6}>
-          <Card className="transition-shadow bg-white border-0 shadow-sm hover:shadow-md">
+          <Card className="transition-shadow bg-slate-800 border-0 shadow-sm hover:shadow-md">
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-2xl font-bold text-gold-600">
                   {stats.superAdmins}
                 </div>
-                <div className="text-sm text-teal-600">
+                <div className="text-sm text-slate-300">
                   Super Admins
                 </div>
-                <div className="mt-1 text-xs text-teal-500">
+                <div className="mt-1 text-xs text-slate-400">
                   Full access accounts
                 </div>
               </div>
@@ -768,16 +768,16 @@ const AdminsPage = () => {
         </Col>
 
         <Col xs={24} sm={12} md={6}>
-          <Card className="transition-shadow bg-white border-0 shadow-sm hover:shadow-md">
+          <Card className="transition-shadow bg-slate-800 border-0 shadow-sm hover:shadow-md">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-2xl font-bold text-teal-800">
+                <div className="text-2xl font-bold text-slate-100">
                   {stats.newThisMonth}
                 </div>
-                <div className="text-sm text-teal-600">
+                <div className="text-sm text-slate-300">
                   New This Month
                 </div>
-                <div className="mt-1 text-xs text-teal-500">
+                <div className="mt-1 text-xs text-slate-400">
                   {stats.growthPercentage}% growth
                 </div>
               </div>
@@ -791,11 +791,11 @@ const AdminsPage = () => {
 
       {/* Filters Card */}
       <Card
-        className="bg-white border-0 shadow-sm"
+        className="bg-slate-800 border-0 shadow-sm"
         title={
           <div className="flex items-center">
-            <FilterOutlined className="mr-2 text-teal-600" />
-            <span className="text-teal-800">Filters</span>
+            <FilterOutlined className="mr-2 text-slate-300" />
+            <span className="text-slate-100">Filters</span>
           </div>
         }
       >
@@ -803,10 +803,10 @@ const AdminsPage = () => {
           <Col xs={24} md={8}>
             <Input
               placeholder="Search by name or email..."
-              prefix={<SearchOutlined className="text-teal-400" />}
+              prefix={<SearchOutlined className="text-cyan-400" />}
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
-              className="border-teal-200 hover:border-teal-300 focus:border-teal-500"
+              className="border-slate-700 hover:border-slate-600 focus:border-teal-500"
               allowClear
             />
           </Col>
@@ -816,7 +816,7 @@ const AdminsPage = () => {
               style={{ width: '100%' }}
               value={filters.status}
               onChange={(value) => setFilters({ ...filters, status: value })}
-              className="border-teal-200 hover:border-teal-300"
+              className="border-slate-700 hover:border-slate-600"
             >
               <Option value="all">All Status</Option>
               <Option value="active">Active Only</Option>
@@ -829,7 +829,7 @@ const AdminsPage = () => {
               style={{ width: '100%' }}
               value={filters.role}
               onChange={(value) => setFilters({ ...filters, role: value })}
-              className="border-teal-200 hover:border-teal-300"
+              className="border-slate-700 hover:border-slate-600"
             >
               <Option value="all">All Roles</Option>
               <Option value="super">Super Admins</Option>
@@ -841,7 +841,7 @@ const AdminsPage = () => {
               style={{ width: '100%' }}
               value={filters.dateRange}
               onChange={(dates) => setFilters({ ...filters, dateRange: dates })}
-              className="border-teal-200 hover:border-teal-300"
+              className="border-slate-700 hover:border-slate-600"
               placeholder={['Join Date From', 'Join Date To']}
             />
           </Col>
@@ -856,7 +856,7 @@ const AdminsPage = () => {
                   dateRange: null,
                 });
               }}
-              className="text-teal-600 border-teal-200 hover:text-teal-700 hover:border-teal-300"
+              className="text-slate-300 border-slate-700 hover:text-slate-200 hover:border-slate-600"
             >
               Clear
             </Button>
@@ -866,19 +866,19 @@ const AdminsPage = () => {
 
       {/* Admins Table */}
       <Card
-        className="bg-white border-0 shadow-sm"
+        className="bg-slate-800 border-0 shadow-sm"
         title={
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
             <div>
-              <Title level={4} className="!mb-0 !text-teal-800">
+              <Title level={4} className="!mb-0 !text-slate-100">
                 All Administrators
               </Title>
-              <Text className="text-teal-600">
+              <Text className="text-slate-300">
                 {filteredAdmins.length} admins found • {stats.active} active • {stats.superAdmins} super admins
               </Text>
             </div>
             <div className="flex items-center gap-2">
-              <Text className="text-teal-600">
+              <Text className="text-slate-300">
                 Showing {((pagination.current - 1) * pagination.pageSize) + 1}-
                 {Math.min(pagination.current * pagination.pageSize, pagination.total)} of {pagination.total}
               </Text>
@@ -904,14 +904,14 @@ const AdminsPage = () => {
               showSizeChanger: true,
               showQuickJumper: true,
               showTotal: (total, range) => (
-                <Text className="text-teal-600">
+                <Text className="text-slate-300">
                   {range[0]}-{range[1]} of {total} admins
                 </Text>
               ),
             }}
             onChange={handleTableChange}
             scroll={{ x: 1000 }}
-            rowClassName="hover:bg-teal-50 transition-colors"
+            rowClassName="hover:bg-slate-800 transition-colors"
           />
         </Spin>
       </Card>
@@ -920,8 +920,8 @@ const AdminsPage = () => {
       <Modal
         title={
           <div className="flex items-center">
-            <PlusOutlined className="mr-2 text-teal-600" />
-            <span className="text-teal-800">Add New Admin</span>
+            <PlusOutlined className="mr-2 text-slate-300" />
+            <span className="text-slate-100">Add New Admin</span>
           </div>
         }
         open={addModalVisible}
@@ -932,10 +932,10 @@ const AdminsPage = () => {
         onOk={() => form.submit()}
         okText="Create Admin"
         okButtonProps={{
-          className: 'bg-teal-600 hover:bg-teal-700 border-0',
+          className: 'bg-cyan-600 hover:bg-cyan-700 border-0',
         }}
         cancelButtonProps={{
-          className: 'border-teal-200 text-teal-600 hover:text-teal-700',
+          className: 'border-slate-700 text-slate-300 hover:text-slate-200',
         }}
         width={600}
       >
@@ -954,7 +954,7 @@ const AdminsPage = () => {
               >
                 <Input
                   placeholder="First Name"
-                  className="border-teal-200"
+                  className="border-slate-700"
                 />
               </Form.Item>
             </Col>
@@ -966,7 +966,7 @@ const AdminsPage = () => {
               >
                 <Input
                   placeholder="Last Name"
-                  className="border-teal-200"
+                  className="border-slate-700"
                 />
               </Form.Item>
             </Col>
@@ -982,7 +982,7 @@ const AdminsPage = () => {
           >
             <Input
               placeholder="Email Address"
-              className="border-teal-200"
+              className="border-slate-700"
             />
           </Form.Item>
 
@@ -996,7 +996,7 @@ const AdminsPage = () => {
           >
             <Input.Password
               placeholder="Password"
-              className="border-teal-200"
+              className="border-slate-700"
             />
           </Form.Item>
 
@@ -1028,8 +1028,8 @@ const AdminsPage = () => {
       <Modal
         title={
           <div className="flex items-center">
-            <EditOutlined className="mr-2 text-teal-600" />
-            <span className="text-teal-800">Edit Admin</span>
+            <EditOutlined className="mr-2 text-slate-300" />
+            <span className="text-slate-100">Edit Admin</span>
           </div>
         }
         open={editModalVisible}
@@ -1040,10 +1040,10 @@ const AdminsPage = () => {
         onOk={() => editForm.submit()}
         okText="Update Admin"
         okButtonProps={{
-          className: 'bg-teal-600 hover:bg-teal-700 border-0',
+          className: 'bg-cyan-600 hover:bg-cyan-700 border-0',
         }}
         cancelButtonProps={{
-          className: 'border-teal-200 text-teal-600 hover:text-teal-700',
+          className: 'border-slate-700 text-slate-300 hover:text-slate-200',
         }}
         width={600}
       >
@@ -1063,7 +1063,7 @@ const AdminsPage = () => {
                 >
                   <Input
                     placeholder="First Name"
-                    className="border-teal-200"
+                    className="border-slate-700"
                   />
                 </Form.Item>
               </Col>
@@ -1075,7 +1075,7 @@ const AdminsPage = () => {
                 >
                   <Input
                     placeholder="Last Name"
-                    className="border-teal-200"
+                    className="border-slate-700"
                   />
                 </Form.Item>
               </Col>
@@ -1091,7 +1091,7 @@ const AdminsPage = () => {
             >
               <Input
                 placeholder="Email Address"
-                className="border-teal-200"
+                className="border-slate-700"
               />
             </Form.Item>
 
@@ -1128,8 +1128,8 @@ const AdminsPage = () => {
       <Modal
         title={
           <div className="flex items-center">
-            <KeyOutlined className="mr-2 text-teal-600" />
-            <span className="text-teal-800">Reset Admin Password</span>
+            <KeyOutlined className="mr-2 text-slate-300" />
+            <span className="text-slate-100">Reset Admin Password</span>
           </div>
         }
         open={resetPasswordModalVisible}
@@ -1140,30 +1140,30 @@ const AdminsPage = () => {
         onOk={() => resetPasswordForm.submit()}
         okText="Reset Password"
         okButtonProps={{
-          className: 'bg-teal-600 hover:bg-teal-700 border-0',
+          className: 'bg-cyan-600 hover:bg-cyan-700 border-0',
         }}
         cancelButtonProps={{
-          className: 'border-teal-200 text-teal-600 hover:text-teal-700',
+          className: 'border-slate-700 text-slate-300 hover:text-slate-200',
         }}
         width={500}
       >
         {selectedAdmin && (
           <div className="space-y-4">
-            <div className="p-3 rounded-lg bg-teal-50">
+            <div className="p-3 rounded-lg bg-slate-800">
               <div className="flex items-center space-x-3">
                 <Avatar
                   size={48}
                   src={selectedAdmin.profilePic}
                   icon={<UserOutlined />}
-                  className="border-2 border-teal-200"
+                  className="border-2 border-slate-700"
                 >
                   {selectedAdmin.firstName?.[0]}{selectedAdmin.lastName?.[0]}
                 </Avatar>
                 <div>
-                  <Text strong className="text-teal-800">
+                  <Text strong className="text-slate-100">
                     {selectedAdmin.firstName} {selectedAdmin.lastName}
                   </Text>
-                  <div className="text-sm text-teal-600">{selectedAdmin.email}</div>
+                  <div className="text-sm text-slate-300">{selectedAdmin.email}</div>
                 </div>
               </div>
             </div>
@@ -1191,7 +1191,7 @@ const AdminsPage = () => {
               >
                 <Input.Password
                   placeholder="Enter new password"
-                  className="border-teal-200"
+                  className="border-slate-700"
                 />
               </Form.Item>
 
@@ -1213,7 +1213,7 @@ const AdminsPage = () => {
               >
                 <Input.Password
                   placeholder="Confirm new password"
-                  className="border-teal-200"
+                  className="border-slate-700"
                 />
               </Form.Item>
             </Form>
@@ -1228,12 +1228,12 @@ const AdminsPage = () => {
             {selectedAdmin?.isBlocked ? (
               <>
                 <CheckOutlined className="mr-2 text-green-600" />
-                <span className="text-teal-800">Unblock Admin</span>
+                <span className="text-slate-100">Unblock Admin</span>
               </>
             ) : (
               <>
                 <BlockOutlined className="mr-2 text-red-600" />
-                <span className="text-teal-800">Block Admin</span>
+                <span className="text-slate-100">Block Admin</span>
               </>
             )}
           </div>
@@ -1255,27 +1255,27 @@ const AdminsPage = () => {
           className: selectedAdmin?.isBlocked ? 'bg-green-600 hover:bg-green-700' : '',
         }}
         cancelButtonProps={{
-          className: 'border-teal-200 text-teal-600 hover:text-teal-700',
+          className: 'border-slate-700 text-slate-300 hover:text-slate-200',
         }}
         width={500}
       >
         {selectedAdmin && (
           <div className="space-y-4">
-            <div className="p-3 rounded-lg bg-teal-50">
+            <div className="p-3 rounded-lg bg-slate-800">
               <div className="flex items-center space-x-3">
                 <Avatar
                   size={48}
                   src={selectedAdmin.profilePic}
                   icon={<UserOutlined />}
-                  className="border-2 border-teal-200"
+                  className="border-2 border-slate-700"
                 >
                   {selectedAdmin.firstName?.[0]}{selectedAdmin.lastName?.[0]}
                 </Avatar>
                 <div>
-                  <Text strong className="text-teal-800">
+                  <Text strong className="text-slate-100">
                     {selectedAdmin.firstName} {selectedAdmin.lastName}
                   </Text>
-                  <div className="text-sm text-teal-600">{selectedAdmin.email}</div>
+                  <div className="text-sm text-slate-300">{selectedAdmin.email}</div>
                 </div>
               </div>
             </div>
@@ -1310,7 +1310,7 @@ const AdminsPage = () => {
               <Form.Item
                 label={
                   <div className="flex items-center">
-                    <span className="text-teal-700">
+                    <span className="text-slate-200">
                       {selectedAdmin.isBlocked ? "Unblock Reason (Optional)" : "Block Reason"}
                     </span>
                     {!selectedAdmin.isBlocked && (
@@ -1328,7 +1328,7 @@ const AdminsPage = () => {
                       ? "Optional: Enter reason for unblocking..."
                       : "Enter reason for blocking this admin..."
                   }
-                  className="border-teal-200 hover:border-teal-300"
+                  className="border-slate-700 hover:border-slate-600"
                   required={!selectedAdmin.isBlocked}
                 />
               </Form.Item>

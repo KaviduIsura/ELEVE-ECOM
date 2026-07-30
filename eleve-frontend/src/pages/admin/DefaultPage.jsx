@@ -42,13 +42,13 @@ const DefaultPage = () => {
   return (
     <div className="space-y-6">
       <div className="py-12 text-center">
-        <div className="flex items-center justify-center w-32 h-32 mx-auto mb-8 rounded-full shadow-xl bg-gradient-to-r from-teal-500 to-teal-600">
+        <div className="flex items-center justify-center w-32 h-32 mx-auto mb-8 rounded-full shadow-xl bg-gradient-to-r from-cyan-600 to-cyan-700">
           <SafetyCertificateOutlined className="text-6xl text-white" />
         </div>
-        <Title level={2} className="mb-4 !text-teal-800">
+        <Title level={2} className="mb-4 !text-slate-100">
           Welcome to ELEVÉ Admin Panel
         </Title>
-        <Text className="max-w-2xl mx-auto mb-8 text-lg text-teal-600">
+        <Text className="max-w-2xl mx-auto mb-8 text-lg text-slate-300">
           Premium dashboard for managing your beauty and cosmetics store. Track
           sales, manage products, handle orders, and monitor customer activity
           in real-time.
@@ -59,7 +59,7 @@ const DefaultPage = () => {
             <Col key={index} xs={24} sm={12} md={6}>
               <Card
                 hoverable
-                className="h-full text-center transition-all duration-300 bg-white border-0 shadow-md hover:shadow-lg"
+                className="h-full text-center transition-all duration-300 bg-slate-800 border-0 shadow-md hover:shadow-lg"
               >
                 <div
                   className="flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-2xl"
@@ -69,10 +69,10 @@ const DefaultPage = () => {
                     {item.icon}
                   </div>
                 </div>
-                <Title level={4} className="!text-teal-800">
+                <Title level={4} className="!text-slate-100">
                   {item.title}
                 </Title>
-                <Text className="text-teal-600">
+                <Text className="text-slate-300">
                   {item.desc}
                 </Text>
               </Card>

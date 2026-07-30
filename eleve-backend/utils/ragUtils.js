@@ -19,6 +19,7 @@ export async function generateEmbedding(text) {
       model: "text-embedding-3-small",
       input: text,
     });
+    console.log(response.data[0].embedding)
     return response.data[0].embedding;
   } catch (error) {
     console.error("Error generating embedding:", error);

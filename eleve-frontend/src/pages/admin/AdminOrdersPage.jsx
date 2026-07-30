@@ -359,7 +359,7 @@ const AdminOrdersPage = () => {
       content: `Are you sure you want to update ${selectedOrders.length} order(s) to "${statusConfig[status]?.label || status}"?`,
       okText: 'Update All',
       cancelText: 'Cancel',
-      okButtonProps: { className: 'bg-teal-600 hover:bg-teal-700' },
+      okButtonProps: { className: 'bg-cyan-600 hover:bg-cyan-700' },
       onOk: async () => {
         try {
           const promises = selectedOrders.map(orderId => 
@@ -666,8 +666,8 @@ const AdminOrdersPage = () => {
             color={event.color}
             dot={event.icon}
           >
-            <div className="text-sm font-medium text-teal-800">{event.title}</div>
-            <div className="text-xs text-teal-500">
+            <div className="text-sm font-medium text-slate-100">{event.title}</div>
+            <div className="text-xs text-slate-400">
               {dayjs(event.time).format('MMM D, YYYY h:mm A')}
             </div>
           </Timeline.Item>
@@ -686,8 +686,8 @@ const AdminOrdersPage = () => {
       <Card
         className={`transition-all duration-300 hover:shadow-lg border ${
           selectedOrders.includes(order._id) 
-            ? 'border-teal-500 bg-teal-50' 
-            : 'border-teal-100 hover:border-teal-300'
+            ? 'border-teal-500 bg-slate-800' 
+            : 'border-slate-600 hover:border-slate-500 bg-slate-800'
         }`}
         onClick={(e) => {
           if (e.target.closest('.order-actions') || e.target.closest('.ant-checkbox-wrapper')) {
@@ -705,7 +705,7 @@ const AdminOrdersPage = () => {
               size="small"
               checked={selectedOrders.includes(order._id)}
               onChange={(checked) => handleOrderSelect(order._id)}
-              className={`${selectedOrders.includes(order._id) ? 'bg-teal-600' : ''}`}
+              className={`${selectedOrders.includes(order._id) ? 'bg-cyan-600' : ''}`}
             />
           </div>
 
@@ -713,12 +713,12 @@ const AdminOrdersPage = () => {
           <div className="flex items-start justify-between mb-3">
             <div>
               <div className="flex items-center gap-2">
-                <IdcardOutlined className="text-teal-500" />
-                <Text strong className="text-teal-800 truncate">
+                <IdcardOutlined className="text-slate-400" />
+                <Text strong className="text-slate-100 truncate">
                   {order.orderId}
                 </Text>
               </div>
-              <div className="flex items-center gap-1 mt-1 text-xs text-teal-600">
+              <div className="flex items-center gap-1 mt-1 text-xs text-slate-300">
                 <CalendarOutlined />
                 {dayjs(order.createdAt).format('MMM D, YYYY')}
               </div>
@@ -735,17 +735,17 @@ const AdminOrdersPage = () => {
           {/* Customer Info */}
           <div className="mb-3">
             <div className="flex items-center gap-2 mb-1">
-              <UserOutlined className="text-teal-500" />
-              <Text className="text-sm font-medium text-teal-800 truncate">
+              <UserOutlined className="text-slate-400" />
+              <Text className="text-sm font-medium text-slate-100 truncate">
                 {customerName || 'Unknown Customer'}
               </Text>
             </div>
-            <div className="flex items-center gap-2 text-xs text-teal-600 truncate">
+            <div className="flex items-center gap-2 text-xs text-slate-300 truncate">
               <MailOutlined />
               {order.email || 'No email'}
             </div>
             {order.shippingInfo?.phone && (
-              <div className="flex items-center gap-2 text-xs text-teal-600 truncate">
+              <div className="flex items-center gap-2 text-xs text-slate-300 truncate">
                 <PhoneOutlined />
                 {order.shippingInfo.phone}
               </div>
@@ -755,13 +755,13 @@ const AdminOrdersPage = () => {
           {/* Order Details */}
           <div className="grid grid-cols-2 gap-2 mb-3 text-xs">
             <div>
-              <div className="text-teal-500">Items</div>
-              <div className="font-medium text-teal-800">
+              <div className="text-slate-400">Items</div>
+              <div className="font-medium text-slate-100">
                 {order.orderedItems?.length || 0}
               </div>
             </div>
             <div>
-              <div className="text-teal-500">Payment</div>
+              <div className="text-slate-400">Payment</div>
               <div>
                 <Tag color={paymentConfig.color} className="px-1 py-0 text-xs">
                   {paymentConfig.label}
@@ -770,11 +770,11 @@ const AdminOrdersPage = () => {
             </div>
             {order.shippingInfo?.city && (
               <div className="col-span-2">
-                <div className="flex items-center gap-1 text-teal-500">
+                <div className="flex items-center gap-1 text-slate-400">
                   <EnvironmentOutlined />
                   <span>Location</span>
                 </div>
-                <div className="font-medium text-teal-800 truncate">
+                <div className="font-medium text-slate-100 truncate">
                   {order.shippingInfo.city}, {order.shippingInfo.state}
                 </div>
               </div>
@@ -782,9 +782,9 @@ const AdminOrdersPage = () => {
           </div>
 
           {/* Amount and Actions */}
-          <div className="flex items-center justify-between pt-3 border-t border-teal-100">
+          <div className="flex items-center justify-between pt-3 border-t border-slate-800">
             <div>
-              <div className="text-xs text-teal-500">Total Amount</div>
+              <div className="text-xs text-slate-400">Total Amount</div>
               <div className="text-lg font-bold text-green-600">
                 ${order.total?.toFixed(2) || '0.00'}
               </div>
@@ -797,7 +797,7 @@ const AdminOrdersPage = () => {
                   size="small"
                   icon={<EyeOutlined />}
                   onClick={() => viewOrderDetails(order._id)}
-                  className="text-teal-600 hover:text-teal-700"
+                  className="text-slate-300 hover:text-slate-200"
                 />
               </Tooltip>
               
@@ -841,7 +841,7 @@ const AdminOrdersPage = () => {
                     type="text"
                     size="small"
                     icon={<MoreOutlined />}
-                    className="text-gray-600 hover:text-gray-700"
+                    className="text-gray-600 hover:text-slate-300"
                   />
                 </Dropdown>
               </Tooltip>
@@ -857,10 +857,10 @@ const AdminOrdersPage = () => {
       {/* Header */}
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
         <div>
-          <Title level={2} className="!text-teal-800">
+          <Title level={2} className="!text-slate-100">
             Orders Management
           </Title>
-          <Text className="text-teal-600">
+          <Text className="text-slate-300">
             Manage and track customer orders efficiently
           </Text>
         </div>
@@ -869,21 +869,21 @@ const AdminOrdersPage = () => {
             icon={<ReloadOutlined />}
             onClick={fetchOrders}
             loading={loading}
-            className="text-teal-600 border-teal-200 hover:text-teal-700 hover:border-teal-300"
+            className="text-slate-300 border-slate-700 hover:text-slate-200 hover:border-slate-600"
           >
             Refresh
           </Button>
           <Button
             icon={<DownloadOutlined />}
             onClick={exportOrders}
-            className="text-teal-600 border-teal-200 hover:text-teal-700 hover:border-teal-300"
+            className="text-slate-300 border-slate-700 hover:text-slate-200 hover:border-slate-600"
           >
             Export
           </Button>
           <Button
             type="primary"
             icon={<PlusOutlined />}
-            className="border-0 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700"
+            className="border-0 bg-gradient-to-r from-cyan-600 to-cyan-700 hover:from-cyan-700 hover:to-cyan-800"
           >
             Create Order
           </Button>
@@ -938,18 +938,18 @@ const AdminOrdersPage = () => {
         ].map((stat, index) => (
           <Col key={index} xs={24} sm={12} md={8} lg={4}>
             <Card
-              className="transition-shadow bg-white border-0 shadow-sm hover:shadow-md"
+              className="transition-shadow bg-slate-800 border-0 shadow-sm hover:shadow-md"
               styles={{ body: { padding: '16px' } }}
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-2xl font-bold text-teal-800">
+                  <div className="text-2xl font-bold text-slate-100">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-teal-600">
+                  <div className="text-sm text-slate-300">
                     {stat.title}
                   </div>
-                  <div className="mt-1 text-xs text-teal-500">
+                  <div className="mt-1 text-xs text-slate-400">
                     {stat.change} from last month
                   </div>
                 </div>
@@ -968,19 +968,19 @@ const AdminOrdersPage = () => {
       </Row>
 
       {/* Quick Filters */}
-      <Card className="bg-white border-0 shadow-sm">
+      <Card className="bg-slate-800 border-0 shadow-sm">
         <div className="flex flex-col justify-between gap-4 mb-4 md:flex-row md:items-center">
-          <Title level={5} className="!mb-0 !text-teal-800">
+          <Title level={5} className="!mb-0 !text-slate-100">
             Quick Filters
           </Title>
-          <div className="text-sm text-teal-600">
+          <div className="text-sm text-slate-300">
             {selectedOrders.length} order(s) selected
             {selectedOrders.length > 0 && (
               <Button
                 type="link"
                 size="small"
                 onClick={() => setSelectedOrders([])}
-                className="ml-2 text-teal-600"
+                className="ml-2 text-slate-300"
               >
                 Clear Selection
               </Button>
@@ -993,10 +993,10 @@ const AdminOrdersPage = () => {
             <Button
               key={filter.key}
               type={selectedFilter === filter.key ? 'primary' : 'default'}
-              className={`border-teal-200 ${
+              className={`border-slate-700 ${
                 selectedFilter === filter.key 
-                  ? 'bg-teal-600 border-teal-600' 
-                  : 'text-teal-600 hover:text-teal-700 hover:border-teal-300'
+                  ? 'bg-cyan-600 border-teal-600' 
+                  : 'text-slate-300 hover:text-slate-200 hover:border-slate-600'
               }`}
               onClick={() => setSelectedFilter(filter.key)}
             >
@@ -1015,13 +1015,13 @@ const AdminOrdersPage = () => {
 
       {/* Bulk Actions */}
       {selectedOrders.length > 0 && (
-        <Card className="bg-white border-0 border-l-4 shadow-sm border-l-teal-500">
+        <Card className="bg-slate-800 border-0 border-l-4 shadow-sm border-l-teal-500">
           <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
             <div>
-              <Text strong className="text-teal-700">
+              <Text strong className="text-slate-200">
                 {selectedOrders.length} order(s) selected
               </Text>
-              <div className="mt-1 text-sm text-teal-600">
+              <div className="mt-1 text-sm text-slate-300">
                 Select actions to perform on all selected orders
               </div>
             </div>
@@ -1029,7 +1029,7 @@ const AdminOrdersPage = () => {
               <Button
                 size="small"
                 onClick={() => setSelectedOrders([])}
-                className="text-teal-600 border-teal-200 hover:text-teal-700"
+                className="text-slate-300 border-slate-700 hover:text-slate-200"
                 icon={<ClearOutlined />}
               >
                 Clear Selection
@@ -1071,7 +1071,7 @@ const AdminOrdersPage = () => {
                 <Button
                   type="primary"
                   size="small"
-                  className="bg-teal-600 border-0 hover:bg-teal-700"
+                  className="bg-cyan-600 border-0 hover:bg-cyan-700"
                   icon={<EditOutlined />}
                 >
                   Bulk Update ({selectedOrders.length})
@@ -1084,11 +1084,11 @@ const AdminOrdersPage = () => {
 
       {/* Filters Card */}
       <Card
-        className="bg-white border-0 shadow-sm"
+        className="bg-slate-800 border-0 shadow-sm"
         title={
           <div className="flex items-center">
-            <FilterOutlined className="mr-2 text-teal-600" />
-            <span className="text-teal-800">Advanced Filters</span>
+            <FilterOutlined className="mr-2 text-slate-300" />
+            <span className="text-slate-100">Advanced Filters</span>
           </div>
         }
       >
@@ -1096,10 +1096,10 @@ const AdminOrdersPage = () => {
           <Col xs={24} md={8}>
             <Input
               placeholder="Search by Order ID, Name, or Email..."
-              prefix={<SearchOutlined className="text-teal-400" />}
+              prefix={<SearchOutlined className="text-cyan-400" />}
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
-              className="border-teal-200 hover:border-teal-300 focus:border-teal-500"
+              className="border-slate-700 hover:border-slate-600 focus:border-teal-500"
               allowClear
             />
           </Col>
@@ -1110,7 +1110,7 @@ const AdminOrdersPage = () => {
               style={{ width: '100%' }}
               value={filters.status}
               onChange={(value) => setFilters({ ...filters, status: value })}
-              className="border-teal-200 hover:border-teal-300"
+              className="border-slate-700 hover:border-slate-600"
             >
               {Object.entries(statusConfig).map(([value, config]) => (
                 <Option key={value} value={value}>
@@ -1126,7 +1126,7 @@ const AdminOrdersPage = () => {
               style={{ width: '100%' }}
               value={filters.paymentMethod}
               onChange={(value) => setFilters({ ...filters, paymentMethod: value })}
-              className="border-teal-200 hover:border-teal-300"
+              className="border-slate-700 hover:border-slate-600"
             >
               {Object.entries(paymentMethodConfig).map(([value, config]) => (
                 <Option key={value} value={value}>
@@ -1140,7 +1140,7 @@ const AdminOrdersPage = () => {
               style={{ width: '100%' }}
               value={filters.dateRange}
               onChange={(dates) => setFilters({ ...filters, dateRange: dates })}
-              className="border-teal-200 hover:border-teal-300"
+              className="border-slate-700 hover:border-slate-600"
             />
           </Col>
           <Col xs={24} md={4}>
@@ -1155,7 +1155,7 @@ const AdminOrdersPage = () => {
                   dateRange: null,
                 });
               }}
-              className="text-teal-600 border-teal-200 hover:text-teal-700 hover:border-teal-300"
+              className="text-slate-300 border-slate-700 hover:text-slate-200 hover:border-slate-600"
             >
               Clear All
             </Button>
@@ -1165,19 +1165,19 @@ const AdminOrdersPage = () => {
 
       {/* Orders Grid */}
       <Card
-        className="bg-white border-0 shadow-sm"
+        className="bg-slate-800 border-0 shadow-sm"
         title={
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
             <div>
-              <Title level={4} className="!mb-0 !text-teal-800">
+              <Title level={4} className="!mb-0 !text-slate-100">
                 All Orders
               </Title>
-              <Text className="text-teal-600">
+              <Text className="text-slate-300">
                 {filteredOrders.length} orders found • ${stats.revenue.toFixed(2)} total revenue
               </Text>
             </div>
             <div className="flex items-center gap-4">
-              <div className="text-sm text-teal-600">
+              <div className="text-sm text-slate-300">
                 View
               </div>
               <Switch
@@ -1186,7 +1186,7 @@ const AdminOrdersPage = () => {
                 checked={gridView}
                 onChange={setGridView}
               />
-              <div className="text-sm text-teal-600">
+              <div className="text-sm text-slate-300">
                 Showing {((pagination.current - 1) * pagination.pageSize) + 1}-
                 {Math.min(pagination.current * pagination.pageSize, pagination.total)} of {pagination.total}
               </div>
@@ -1198,7 +1198,7 @@ const AdminOrdersPage = () => {
           {filteredOrders.length === 0 ? (
             <Empty
               description={
-                <span className="text-teal-600">
+                <span className="text-slate-300">
                   No orders found. Try adjusting your filters.
                 </span>
               }
@@ -1224,10 +1224,10 @@ const AdminOrdersPage = () => {
               )}
               renderItem={(order) => (
                 <List.Item
-                  className={`p-4 mb-2 transition-colors rounded-lg border ${
+                  className={`p-4 mb-2 transition-colors rounded-lg border flex items-center justify-between ${
                     selectedOrders.includes(order._id)
-                      ? 'border-teal-500 bg-teal-50'
-                      : 'border-teal-100 hover:bg-teal-50'
+                      ? 'border-teal-500 bg-slate-800'
+                      : 'border-slate-600 hover:border-slate-500 hover:bg-slate-700 bg-slate-800'
                   }`}
                   actions={[
                     <Tooltip title="View Details">
@@ -1235,7 +1235,7 @@ const AdminOrdersPage = () => {
                         type="text"
                         icon={<EyeOutlined />}
                         onClick={() => viewOrderDetails(order._id)}
-                        className="text-teal-600 hover:text-teal-700"
+                        className="text-slate-300 hover:text-slate-200"
                       />
                     </Tooltip>,
                     <Tooltip title="Update Status">
@@ -1259,7 +1259,7 @@ const AdminOrdersPage = () => {
                           size="small"
                           checked={selectedOrders.includes(order._id)}
                           onChange={(checked) => handleOrderSelect(order._id)}
-                          className={`${selectedOrders.includes(order._id) ? 'bg-teal-600' : ''}`}
+                          className={`${selectedOrders.includes(order._id) ? 'bg-cyan-600' : ''}`}
                         />
                         <Avatar
                           style={{ backgroundColor: statusConfig[order.status]?.color || '#08979c' }}
@@ -1269,7 +1269,7 @@ const AdminOrdersPage = () => {
                     }
                     title={
                       <div className="flex items-center gap-2">
-                        <Text strong className="text-teal-800">
+                        <Text strong className="text-slate-100">
                           {order.orderId}
                         </Text>
                         <Tag 
@@ -1282,10 +1282,10 @@ const AdminOrdersPage = () => {
                     }
                     description={
                       <div className="space-y-1">
-                        <div className="text-teal-700">
+                        <div className="text-slate-200">
                           {order.shippingInfo?.firstName} {order.shippingInfo?.lastName} • {order.email}
                         </div>
-                        <div className="text-sm text-teal-600">
+                        <div className="text-sm text-slate-300">
                           {dayjs(order.createdAt).format('MMM D, YYYY h:mm A')} • 
                           {order.shippingInfo?.city && ` ${order.shippingInfo.city}, ${order.shippingInfo.state}`}
                         </div>
@@ -1296,7 +1296,7 @@ const AdminOrdersPage = () => {
                     <div className="text-lg font-bold text-green-600">
                       ${order.total?.toFixed(2)}
                     </div>
-                    <div className="text-xs text-teal-600">
+                    <div className="text-xs text-slate-300">
                       {order.orderedItems?.length} items
                     </div>
                   </div>
@@ -1315,7 +1315,7 @@ const AdminOrdersPage = () => {
               showSizeChanger
               showQuickJumper
               showTotal={(total, range) => (
-                <Text className="text-teal-600">
+                <Text className="text-slate-300">
                   {range[0]}-{range[1]} of {total} orders
                 </Text>
               )}
@@ -1330,10 +1330,10 @@ const AdminOrdersPage = () => {
         title={
           <div className="flex items-center justify-between">
             <div>
-              <Title level={3} className="!mb-0 !text-teal-800">
+              <Title level={3} className="!mb-0 !text-slate-100">
                 Order Details: {selectedOrder?.orderId}
               </Title>
-              <Text type="secondary" className="text-teal-600">
+              <Text type="secondary" className="text-slate-300">
                 Placed on {selectedOrder && dayjs(selectedOrder.createdAt).format('MMMM D, YYYY h:mm A')}
               </Text>
             </div>
@@ -1363,7 +1363,7 @@ const AdminOrdersPage = () => {
             key="print"
             icon={<PrinterOutlined />}
             onClick={() => printInvoice(selectedOrder)}
-            className="text-teal-600 border-teal-200 hover:text-teal-700"
+            className="text-slate-300 border-slate-700 hover:text-slate-200"
           >
             Print Invoice
           </Button>,
@@ -1375,7 +1375,7 @@ const AdminOrdersPage = () => {
               statusForm.setFieldsValue({ status: selectedOrder?.status });
               setStatusModalVisible(true);
             }}
-            className="bg-teal-600 border-0 hover:bg-teal-700"
+            className="bg-cyan-600 border-0 hover:bg-cyan-700"
           >
             Update Status
           </Button>,
@@ -1391,8 +1391,8 @@ const AdminOrdersPage = () => {
                     <Card
                       title={
                         <div className="flex items-center">
-                          <ShoppingCartOutlined className="mr-2 text-teal-600" />
-                          <span className="text-teal-800">Order Items ({selectedOrder.orderedItems?.length})</span>
+                          <ShoppingCartOutlined className="mr-2 text-slate-300" />
+                          <span className="text-slate-100">Order Items ({selectedOrder.orderedItems?.length})</span>
                         </div>
                       }
                       className="mb-4 border-0 shadow-sm"
@@ -1400,23 +1400,23 @@ const AdminOrdersPage = () => {
                       <List
                         dataSource={selectedOrder.orderedItems}
                         renderItem={(item) => (
-                          <List.Item className="py-3 border-0 border-b border-teal-100 last:border-b-0">
+                          <List.Item className="py-3 border-0 border-b border-slate-800 last:border-b-0">
                             <div className="flex items-center justify-between w-full">
                               <div className="flex items-center">
                                 <Avatar
                                   src={item.image}
                                   shape="square"
                                   size={48}
-                                  className="mr-3 border border-teal-100"
+                                  className="mr-3 border border-slate-800"
                                 />
                                 <div>
-                                  <div className="font-medium text-teal-800">{item.name}</div>
-                                  <div className="text-xs text-teal-500">SKU: {item.productId?.slice(-8)}</div>
+                                  <div className="font-medium text-slate-100">{item.name}</div>
+                                  <div className="text-xs text-slate-400">SKU: {item.productId?.slice(-8)}</div>
                                 </div>
                               </div>
                               <div className="text-right">
-                                <div className="font-medium text-teal-800">${item.price?.toFixed(2)}</div>
-                                <div className="text-sm text-teal-600">Qty: {item.quantity}</div>
+                                <div className="font-medium text-slate-100">${item.price?.toFixed(2)}</div>
+                                <div className="text-sm text-slate-300">Qty: {item.quantity}</div>
                                 <div className="font-bold text-green-600">${(item.price * item.quantity)?.toFixed(2)}</div>
                               </div>
                             </div>
@@ -1429,8 +1429,8 @@ const AdminOrdersPage = () => {
                     <Card
                       title={
                         <div className="flex items-center">
-                          <ClockCircleOutlined className="mr-2 text-teal-600" />
-                          <span className="text-teal-800">Order Timeline</span>
+                          <ClockCircleOutlined className="mr-2 text-slate-300" />
+                          <span className="text-slate-100">Order Timeline</span>
                         </div>
                       }
                       className="border-0 shadow-sm"
@@ -1444,33 +1444,33 @@ const AdminOrdersPage = () => {
                     <Card
                       title={
                         <div className="flex items-center">
-                          <TruckOutlined className="mr-2 text-teal-600" />
-                          <span className="text-teal-800">Shipping Information</span>
+                          <TruckOutlined className="mr-2 text-slate-300" />
+                          <span className="text-slate-100">Shipping Information</span>
                         </div>
                       }
                       className="mb-4 border-0 shadow-sm"
                     >
                       <Descriptions column={1} size="small">
-                        <Descriptions.Item label="Name" className="text-teal-800">
+                        <Descriptions.Item label="Name" className="text-slate-100">
                           {selectedOrder.shippingInfo?.firstName} {selectedOrder.shippingInfo?.lastName}
                         </Descriptions.Item>
-                        <Descriptions.Item label="Email" className="text-teal-800">
+                        <Descriptions.Item label="Email" className="text-slate-100">
                           {selectedOrder.shippingInfo?.email}
                         </Descriptions.Item>
-                        <Descriptions.Item label="Phone" className="text-teal-800">
+                        <Descriptions.Item label="Phone" className="text-slate-100">
                           {selectedOrder.shippingInfo?.phone}
                         </Descriptions.Item>
-                        <Descriptions.Item label="Address" className="text-teal-800">
+                        <Descriptions.Item label="Address" className="text-slate-100">
                           {selectedOrder.shippingInfo?.address}
                           {selectedOrder.shippingInfo?.apartment && `, ${selectedOrder.shippingInfo.apartment}`}
                         </Descriptions.Item>
-                        <Descriptions.Item label="City/State/Zip" className="text-teal-800">
+                        <Descriptions.Item label="City/State/Zip" className="text-slate-100">
                           {selectedOrder.shippingInfo?.city}, {selectedOrder.shippingInfo?.state} {selectedOrder.shippingInfo?.zipCode}
                         </Descriptions.Item>
-                        <Descriptions.Item label="Country" className="text-teal-800">
+                        <Descriptions.Item label="Country" className="text-slate-100">
                           {selectedOrder.shippingInfo?.country}
                         </Descriptions.Item>
-                        <Descriptions.Item label="Delivery Method" className="text-teal-800">
+                        <Descriptions.Item label="Delivery Method" className="text-slate-100">
                           <Tag color={deliveryMethodConfig[selectedOrder.deliveryMethod]?.color || 'default'}>
                             {deliveryMethodConfig[selectedOrder.deliveryMethod]?.label || selectedOrder.deliveryMethod}
                           </Tag>
@@ -1482,19 +1482,19 @@ const AdminOrdersPage = () => {
                     <Card
                       title={
                         <div className="flex items-center">
-                          <CreditCardOutlined className="mr-2 text-teal-600" />
-                          <span className="text-teal-800">Payment Information</span>
+                          <CreditCardOutlined className="mr-2 text-slate-300" />
+                          <span className="text-slate-100">Payment Information</span>
                         </div>
                       }
                       className="mb-4 border-0 shadow-sm"
                     >
                       <Descriptions column={1} size="small">
-                        <Descriptions.Item label="Payment Method" className="text-teal-800">
+                        <Descriptions.Item label="Payment Method" className="text-slate-100">
                           <Tag color={paymentMethodConfig[selectedOrder.paymentMethod]?.color || 'default'}>
                             {paymentMethodConfig[selectedOrder.paymentMethod]?.label || selectedOrder.paymentMethod}
                           </Tag>
                         </Descriptions.Item>
-                        <Descriptions.Item label="Payment Status" className="text-teal-800">
+                        <Descriptions.Item label="Payment Status" className="text-slate-100">
                           {selectedOrder.isPaid ? (
                             <Tag color="green" icon={<CheckCircleOutlined />}>Paid</Tag>
                           ) : (
@@ -1502,12 +1502,12 @@ const AdminOrdersPage = () => {
                           )}
                         </Descriptions.Item>
                         {selectedOrder.paymentInfo?.cardNumber && (
-                          <Descriptions.Item label="Card" className="text-teal-800">
+                          <Descriptions.Item label="Card" className="text-slate-100">
                             **** **** **** {selectedOrder.paymentInfo.cardNumber.slice(-4)}
                           </Descriptions.Item>
                         )}
                         {selectedOrder.paymentInfo?.cardName && (
-                          <Descriptions.Item label="Cardholder" className="text-teal-800">
+                          <Descriptions.Item label="Cardholder" className="text-slate-100">
                             {selectedOrder.paymentInfo.cardName}
                           </Descriptions.Item>
                         )}
@@ -1518,34 +1518,34 @@ const AdminOrdersPage = () => {
                     <Card
                       title={
                         <div className="flex items-center">
-                          <FileTextOutlined className="mr-2 text-teal-600" />
-                          <span className="text-teal-800">Order Summary</span>
+                          <FileTextOutlined className="mr-2 text-slate-300" />
+                          <span className="text-slate-100">Order Summary</span>
                         </div>
                       }
                       className="border-0 shadow-sm"
                     >
                       <Descriptions column={1} size="small">
-                        <Descriptions.Item label="Subtotal" className="text-teal-800">
+                        <Descriptions.Item label="Subtotal" className="text-slate-100">
                           ${selectedOrder.subtotal?.toFixed(2)}
                         </Descriptions.Item>
-                        <Descriptions.Item label="Shipping" className="text-teal-800">
+                        <Descriptions.Item label="Shipping" className="text-slate-100">
                           ${selectedOrder.shipping?.toFixed(2)}
                         </Descriptions.Item>
-                        <Descriptions.Item label="Tax" className="text-teal-800">
+                        <Descriptions.Item label="Tax" className="text-slate-100">
                           ${selectedOrder.tax?.toFixed(2)}
                         </Descriptions.Item>
                         {selectedOrder.discount > 0 && (
-                          <Descriptions.Item label="Discount" className="text-teal-800">
+                          <Descriptions.Item label="Discount" className="text-slate-100">
                             -${selectedOrder.discount?.toFixed(2)}
                           </Descriptions.Item>
                         )}
                         {selectedOrder.codFee > 0 && (
-                          <Descriptions.Item label="COD Fee" className="text-teal-800">
+                          <Descriptions.Item label="COD Fee" className="text-slate-100">
                             ${selectedOrder.codFee?.toFixed(2)}
                           </Descriptions.Item>
                         )}
                         <Divider style={{ margin: '8px 0' }} />
-                        <Descriptions.Item label="Total" className="text-teal-800">
+                        <Descriptions.Item label="Total" className="text-slate-100">
                           <Text strong className="text-lg text-green-600">
                             ${selectedOrder.total?.toFixed(2)}
                           </Text>
@@ -1563,23 +1563,23 @@ const AdminOrdersPage = () => {
                       <div className="flex items-center mb-6">
                         <Avatar 
                           size={64} 
-                          className="mr-4 border-2 border-teal-100"
+                          className="mr-4 border-2 border-slate-800"
                           src={`https://ui-avatars.com/api/?name=${selectedOrder.shippingInfo?.firstName}+${selectedOrder.shippingInfo?.lastName}&background=08979c&color=fff`}
                         >
                           {selectedOrder.shippingInfo?.firstName?.[0]}{selectedOrder.shippingInfo?.lastName?.[0]}
                         </Avatar>
                         <div>
-                          <Title level={4} className="!mb-1 !text-teal-800">
+                          <Title level={4} className="!mb-1 !text-slate-100">
                             {selectedOrder.shippingInfo?.firstName} {selectedOrder.shippingInfo?.lastName}
                           </Title>
                           <Space>
-                            <Tag icon={<MailOutlined />} className="text-teal-700 border-teal-200 bg-teal-50">
+                            <Tag icon={<MailOutlined />} className="text-slate-200 border-slate-700 bg-slate-800">
                               {selectedOrder.email}
                             </Tag>
-                            <Tag icon={<PhoneOutlined />} className="text-teal-700 border-teal-200 bg-teal-50">
+                            <Tag icon={<PhoneOutlined />} className="text-slate-200 border-slate-700 bg-slate-800">
                               {selectedOrder.shippingInfo?.phone}
                             </Tag>
-                            <Tag icon={<UserOutlined />} className="text-teal-700 border-teal-200 bg-teal-50">
+                            <Tag icon={<UserOutlined />} className="text-slate-200 border-slate-700 bg-slate-800">
                               Customer since {dayjs(selectedOrder.createdAt).format('MMM YYYY')}
                             </Tag>
                           </Space>
@@ -1593,11 +1593,11 @@ const AdminOrdersPage = () => {
               <TabPane tab="Notes" key="3">
                 <Card className="border-0 shadow-sm">
                   {selectedOrder.notes || selectedOrder.orderNotes ? (
-                    <Paragraph className="text-teal-800">
+                    <Paragraph className="text-slate-100">
                       {selectedOrder.notes || selectedOrder.orderNotes}
                     </Paragraph>
                   ) : (
-                    <div className="py-8 text-center text-teal-500">
+                    <div className="py-8 text-center text-slate-400">
                       <FileTextOutlined className="mb-4 text-4xl" />
                       <div>No notes for this order</div>
                     </div>
@@ -1613,8 +1613,8 @@ const AdminOrdersPage = () => {
       <Modal
         title={
           <div className="flex items-center">
-            <EditOutlined className="mr-2 text-teal-600" />
-            <span className="text-teal-800">Update Order Status</span>
+            <EditOutlined className="mr-2 text-slate-300" />
+            <span className="text-slate-100">Update Order Status</span>
           </div>
         }
         open={statusModalVisible}
@@ -1625,21 +1625,21 @@ const AdminOrdersPage = () => {
         onOk={() => statusForm.submit()}
         okText="Update Status"
         okButtonProps={{
-          className: 'bg-teal-600 hover:bg-teal-700 border-0',
+          className: 'bg-cyan-600 hover:bg-cyan-700 border-0',
           icon: <CheckCircleOutlined />,
         }}
         cancelButtonProps={{
-          className: 'border-teal-200 text-teal-600 hover:text-teal-700',
+          className: 'border-slate-700 text-slate-300 hover:text-slate-200',
         }}
         width={500}
         destroyOnClose
       >
         {selectedOrder && (
-          <div className="p-3 mb-4 rounded-lg bg-teal-50">
+          <div className="p-3 mb-4 rounded-lg bg-slate-800">
             <div className="flex items-center justify-between">
               <div>
-                <Text strong className="text-teal-800">{selectedOrder.orderId}</Text>
-                <div className="text-sm text-teal-600">
+                <Text strong className="text-slate-100">{selectedOrder.orderId}</Text>
+                <div className="text-sm text-slate-300">
                   Customer: {selectedOrder.shippingInfo?.firstName} {selectedOrder.shippingInfo?.lastName}
                 </div>
               </div>
@@ -1666,7 +1666,7 @@ const AdminOrdersPage = () => {
             name="status"
             label={
               <div className="flex items-center">
-                <span className="text-teal-700">Select New Status</span>
+                <span className="text-slate-200">Select New Status</span>
                 <span className="ml-1 text-red-500">*</span>
               </div>
             }
@@ -1696,23 +1696,23 @@ const AdminOrdersPage = () => {
             name="notes"
             label={
               <div className="flex items-center">
-                <span className="text-teal-700">Status Update Notes (Optional)</span>
-                <span className="ml-1 text-xs text-teal-500">Add internal notes about this change</span>
+                <span className="text-slate-200">Status Update Notes (Optional)</span>
+                <span className="ml-1 text-xs text-slate-400">Add internal notes about this change</span>
               </div>
             }
           >
             <Input.TextArea 
               rows={3} 
               placeholder="e.g., Package shipped via DHL with tracking number ABC123..." 
-              className="border-teal-200 hover:border-teal-300 focus:border-teal-500"
+              className="border-slate-700 hover:border-slate-600 focus:border-teal-500"
               maxLength={500}
               showCount
             />
           </Form.Item>
           
           {/* Status Descriptions */}
-          <div className="p-3 mb-4 rounded-lg bg-gray-50">
-            <Text strong className="block mb-2 text-sm text-gray-700">Status Meanings:</Text>
+          <div className="p-3 mb-4 rounded-lg bg-slate-700">
+            <Text strong className="block mb-2 text-sm text-slate-300">Status Meanings:</Text>
             <div className="space-y-1 text-xs text-gray-600">
               {Object.entries(statusConfig).map(([key, config]) => (
                 <div key={key}>
@@ -1728,8 +1728,8 @@ const AdminOrdersPage = () => {
       <Modal
         title={
           <div className="flex items-center">
-            <EditOutlined className="mr-2 text-teal-600" />
-            <span className="text-teal-800">Bulk Update {selectedOrders.length} Orders</span>
+            <EditOutlined className="mr-2 text-slate-300" />
+            <span className="text-slate-100">Bulk Update {selectedOrders.length} Orders</span>
           </div>
         }
         open={bulkUpdateModalVisible}
@@ -1740,11 +1740,11 @@ const AdminOrdersPage = () => {
         onOk={() => bulkStatusForm.submit()}
         okText={`Update ${selectedOrders.length} Orders`}
         okButtonProps={{
-          className: 'bg-teal-600 hover:bg-teal-700 border-0',
+          className: 'bg-cyan-600 hover:bg-cyan-700 border-0',
           icon: <CheckCircleOutlined />,
         }}
         cancelButtonProps={{
-          className: 'border-teal-200 text-teal-600 hover:text-teal-700',
+          className: 'border-slate-700 text-slate-300 hover:text-slate-200',
         }}
         width={500}
       >
@@ -1776,7 +1776,7 @@ const AdminOrdersPage = () => {
             <Input.TextArea 
               rows={3} 
               placeholder="Add notes for this bulk update..." 
-              className="border-teal-200 hover:border-teal-300"
+              className="border-slate-700 hover:border-slate-600"
             />
           </Form.Item>
         </Form>

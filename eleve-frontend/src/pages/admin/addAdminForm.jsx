@@ -57,11 +57,11 @@ export default function AddUserForm() {
   }
 
   return (
-    <div className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-md mt-4">
+    <div className="max-w-lg mx-auto bg-slate-800 p-8 rounded-lg shadow-md mt-4">
       <h1 className="text-2xl font-bold mb-6 text-center">Add User Form</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2">
+          <label className="block text-slate-300 font-medium mb-2">
             First Name
           </label>
           <input
@@ -73,7 +73,7 @@ export default function AddUserForm() {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2">
+          <label className="block text-slate-300 font-medium mb-2">
             Last Name
           </label>
           <input
@@ -85,7 +85,7 @@ export default function AddUserForm() {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2">
+          <label className="block text-slate-300 font-medium mb-2">
             User Email
           </label>
           <input
@@ -97,7 +97,7 @@ export default function AddUserForm() {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2">
+          <label className="block text-slate-300 font-medium mb-2">
             Profile Picture
           </label>
           <input
@@ -108,7 +108,7 @@ export default function AddUserForm() {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2">
+          <label className="block text-slate-300 font-medium mb-2">
             Password
           </label>
           <input

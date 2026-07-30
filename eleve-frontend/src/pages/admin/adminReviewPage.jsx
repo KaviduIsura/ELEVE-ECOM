@@ -1,19 +1,37 @@
-// AdminReviewPage.jsx
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { 
-  Search, 
-  Filter, 
-  CheckCircle, 
-  XCircle, 
-  Clock,
-  Eye,
-  EyeOff,
-  Trash2,
-  Star,
-  AlertCircle
-} from "lucide-react";
-import toast from "react-hot-toast";
+import {
+  Table,
+  Card,
+  Input,
+  Select,
+  Tag,
+  Button,
+  Popconfirm,
+  Space,
+  Typography,
+  Row,
+  Col,
+  Rate,
+  Avatar,
+  message
+} from "antd";
+import {
+  SearchOutlined,
+  FilterOutlined,
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  ClockCircleOutlined,
+  EyeOutlined,
+  EyeInvisibleOutlined,
+  DeleteOutlined,
+  AlertOutlined,
+  MessageOutlined
+} from "@ant-design/icons";
+import dayjs from "dayjs";
+
+const { Title, Text } = Typography;
+const { Search } = Input;
 
 export default function AdminReviewPage() {
   const [reviews, setReviews] = useState([]);
@@ -55,7 +73,7 @@ export default function AdminReviewPage() {
       }
     } catch (error) {
       console.error("Error fetching reviews:", error);
-      toast.error("Failed to load reviews");
+      message.error("Failed to load reviews");
     } finally {
       setLoading(false);
     }
@@ -79,20 +97,16 @@ export default function AdminReviewPage() {
       );
 
       if (response.data.success) {
-        toast.success(`Review ${status} successfully`);
-        fetchReviews(); // Refresh the list
+        message.success(`Review ${status} successfully`);
+        fetchReviews();
       }
     } catch (error) {
       console.error("Error updating review status:", error);
-      toast.error("Failed to update review status");
+      message.error("Failed to update review status");
     }
   };
 
   const deleteReview = async (reviewId) => {
-    if (!window.confirm("Are you sure you want to delete this review?")) {
-      return;
-    }
-
     try {
       const token = localStorage.getItem("token");
       const response = await axios.delete(
@@ -105,12 +119,12 @@ export default function AdminReviewPage() {
       );
 
       if (response.data.success) {
-        toast.success("Review deleted successfully");
-        fetchReviews(); // Refresh the list
+        message.success("Review deleted successfully");
+        fetchReviews();
       }
     } catch (error) {
       console.error("Error deleting review:", error);
-      toast.error("Failed to delete review");
+      message.error("Failed to delete review");
     }
   };
 
@@ -128,314 +142,250 @@ export default function AdminReviewPage() {
       );
 
       if (response.data.success) {
-        toast.success(`Review ${!currentHidden ? 'hidden' : 'made visible'}`);
-        fetchReviews(); // Refresh the list
+        message.success(`Review ${!currentHidden ? 'hidden' : 'made visible'}`);
+        fetchReviews();
       }
     } catch (error) {
       console.error("Error toggling visibility:", error);
-      toast.error("Failed to update review visibility");
+      message.error("Failed to update review visibility");
     }
   };
 
-  const getStatusBadge = (status) => {
-    const statusConfig = {
-      pending: { color: "bg-yellow-100 text-yellow-800", icon: Clock },
-      approved: { color: "bg-green-100 text-green-800", icon: CheckCircle },
-      rejected: { color: "bg-red-100 text-red-800", icon: XCircle }
-    };
-    
-    const config = statusConfig[status] || statusConfig.pending;
-    const Icon = config.icon;
-    
-    return (
-      <span className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${config.color}`}>
-        <Icon className="w-3 h-3" />
-        {status.charAt(0).toUpperCase() + status.slice(1)}
-      </span>
-    );
+  const getStatusTag = (status) => {
+    switch (status) {
+      case 'approved':
+        return <Tag icon={<CheckCircleOutlined />} color="success">Approved</Tag>;
+      case 'rejected':
+        return <Tag icon={<CloseCircleOutlined />} color="error">Rejected</Tag>;
+      case 'pending':
+      default:
+        return <Tag icon={<ClockCircleOutlined />} color="warning">Pending</Tag>;
+    }
   };
 
+  const columns = [
+    {
+      title: 'Customer & Product',
+      key: 'customer',
+      width: '25%',
+      render: (_, record) => (
+        <Space align="start">
+          <Avatar src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" />
+          <div className="flex flex-col">
+            <Text strong className="text-slate-100">{record.userName}</Text>
+            <Text type="secondary" className="text-xs text-slate-400">{record.email}</Text>
+            {record.productId && (
+              <div className="mt-2">
+                <Text className="text-xs font-medium text-slate-300">
+                  {record.productId.productName}
+                </Text>
+                {record.productId.images?.[0] && (
+                  <img
+                    src={record.productId.images[0]}
+                    alt={record.productId.productName}
+                    className="object-cover w-12 h-12 mt-1 rounded"
+                  />
+                )}
+              </div>
+            )}
+          </div>
+        </Space>
+      )
+    },
+    {
+      title: 'Rating & Review',
+      key: 'review',
+      width: '40%',
+      render: (_, record) => (
+        <div className="flex flex-col">
+          <Space className="mb-2">
+            <Rate disabled defaultValue={record.rating} className="text-sm text-yellow-400" />
+            <Text strong className="text-slate-200">{record.rating}/5</Text>
+          </Space>
+          <Text className="text-slate-300 line-clamp-3">{record.review}</Text>
+          {record.adminComment && (
+            <div className="p-2 mt-2 text-sm rounded bg-slate-800 border border-slate-700">
+              <Text strong className="text-cyan-400"><MessageOutlined className="mr-1"/>Admin Note: </Text>
+              <Text className="text-slate-300">{record.adminComment}</Text>
+            </div>
+          )}
+        </div>
+      )
+    },
+    {
+      title: 'Status',
+      key: 'status',
+      width: '15%',
+      render: (_, record) => (
+        <Space direction="vertical" size="small">
+          {getStatusTag(record.status)}
+          {record.hidden && (
+            <Tag icon={<EyeInvisibleOutlined />} color="default">Hidden</Tag>
+          )}
+          <Text type="secondary" className="text-xs text-slate-400">
+            {dayjs(record.createdAt).format('MMM D, YYYY')}
+          </Text>
+        </Space>
+      )
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      width: '20%',
+      render: (_, record) => (
+        <Space direction="vertical" size="small" className="w-full">
+          {record.status === 'pending' && (
+            <Space className="w-full">
+              <Button
+                type="primary"
+                size="small"
+                className="bg-green-600 hover:bg-green-500 border-0"
+                icon={<CheckCircleOutlined />}
+                onClick={() => updateReviewStatus(record._id, 'approved')}
+              >
+                Approve
+              </Button>
+              <Button
+                danger
+                size="small"
+                icon={<CloseCircleOutlined />}
+                onClick={() => {
+                  const comment = prompt("Rejection reason (optional):");
+                  if (comment !== null) {
+                    updateReviewStatus(record._id, 'rejected', comment);
+                  }
+                }}
+              >
+                Reject
+              </Button>
+            </Space>
+          )}
+          
+          <Space className="w-full">
+            <Button
+              size="small"
+              icon={record.hidden ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+              onClick={() => toggleVisibility(record._id, record.hidden)}
+              className="w-24 text-slate-300 border-slate-600 hover:text-cyan-400 hover:border-cyan-400"
+            >
+              {record.hidden ? "Show" : "Hide"}
+            </Button>
+            
+            <Popconfirm
+              title="Delete Review"
+              description="Are you sure you want to delete this review permanently?"
+              onConfirm={() => deleteReview(record._id)}
+              okText="Delete"
+              cancelText="Cancel"
+              okButtonProps={{ danger: true }}
+            >
+              <Button size="small" danger icon={<DeleteOutlined />}>
+                Delete
+              </Button>
+            </Popconfirm>
+          </Space>
+        </Space>
+      )
+    }
+  ];
+
   return (
-    <div className="min-h-screen p-6 bg-gray-50">
-      <div className="mx-auto max-w-7xl">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Customer Reviews</h1>
-          <p className="mt-2 text-gray-600">Manage and approve customer reviews</p>
-        </div>
-
-        {/* Filters */}
-        <div className="p-4 mb-6 bg-white rounded-lg shadow">
-          <div className="flex flex-col gap-4 md:flex-row">
-            {/* Search */}
-            <div className="flex-1">
-              <div className="relative">
-                <Search className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
-                <input
-                  type="text"
-                  placeholder="Search by name, email, or review content..."
-                  value={filters.search}
-                  onChange={(e) => setFilters({ ...filters, search: e.target.value, page: 1 })}
-                  className="w-full py-2 pl-10 pr-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-            </div>
-
-            {/* Status Filter */}
-            <div className="w-full md:w-48">
-              <div className="relative">
-                <Filter className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
-                <select
-                  value={filters.status}
-                  onChange={(e) => setFilters({ ...filters, status: e.target.value, page: 1 })}
-                  className="w-full py-2 pl-10 pr-4 border border-gray-300 rounded-lg appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                >
-                  <option value="all">All Status</option>
-                  <option value="pending">Pending</option>
-                  <option value="approved">Approved</option>
-                  <option value="rejected">Rejected</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-1 gap-4 mb-6 md:grid-cols-3">
-          <div className="p-4 bg-white rounded-lg shadow">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Pending Reviews</p>
-                <p className="mt-1 text-2xl font-bold">
-                  {reviews.filter(r => r.status === 'pending').length}
-                </p>
-              </div>
-              <Clock className="w-8 h-8 text-yellow-500" />
-            </div>
-          </div>
-          <div className="p-4 bg-white rounded-lg shadow">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Approved Reviews</p>
-                <p className="mt-1 text-2xl font-bold">
-                  {reviews.filter(r => r.status === 'approved').length}
-                </p>
-              </div>
-              <CheckCircle className="w-8 h-8 text-green-500" />
-            </div>
-          </div>
-          <div className="p-4 bg-white rounded-lg shadow">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Total Reviews</p>
-                <p className="mt-1 text-2xl font-bold">{reviews.length}</p>
-              </div>
-              <AlertCircle className="w-8 h-8 text-blue-500" />
-            </div>
-          </div>
-        </div>
-
-        {/* Reviews Table */}
-        <div className="overflow-hidden bg-white rounded-lg shadow">
-          {loading ? (
-            <div className="flex items-center justify-center h-64">
-              <div className="text-center">
-                <div className="w-8 h-8 mx-auto mb-4 border-2 border-gray-300 rounded-full border-t-blue-500 animate-spin"></div>
-                <p className="text-gray-600">Loading reviews...</p>
-              </div>
-            </div>
-          ) : reviews.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-64">
-              <AlertCircle className="w-12 h-12 mb-4 text-gray-400" />
-              <p className="text-gray-600">No reviews found</p>
-              <p className="mt-1 text-sm text-gray-500">Try adjusting your filters</p>
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                      Customer & Product
-                    </th>
-                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                      Rating & Review
-                    </th>
-                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                      Status
-                    </th>
-                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                      Date
-                    </th>
-                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {reviews.map((review) => (
-                    <tr key={review._id} className="transition-colors hover:bg-gray-50">
-                      <td className="px-6 py-4">
-                        <div className="flex items-start space-x-3">
-                          <div className="flex-shrink-0">
-                            <img
-                              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                              alt="Profile"
-                              className="w-10 h-10 rounded-full"
-                            />
-                          </div>
-                          <div>
-                            <div className="text-sm font-medium text-gray-900">
-                              {review.userName}
-                            </div>
-                            <div className="text-sm text-gray-500">{review.email}</div>
-                            {review.productId && (
-                              <div className="mt-2">
-                                <div className="text-xs font-medium text-gray-700">
-                                  {review.productId.productName}
-                                </div>
-                                {review.productId.images && review.productId.images[0] && (
-                                  <img
-                                    src={review.productId.images[0]}
-                                    alt={review.productId.productName}
-                                    className="object-cover w-16 h-16 mt-1 rounded"
-                                  />
-                                )}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center mb-2">
-                          <div className="flex">
-                            {[...Array(5)].map((_, i) => (
-                              <Star
-                                key={i}
-                                className={`w-4 h-4 ${
-                                  i < review.rating
-                                    ? "text-yellow-400 fill-yellow-400"
-                                    : "text-gray-300"
-                                }`}
-                              />
-                            ))}
-                          </div>
-                          <span className="ml-2 text-sm font-medium">{review.rating}/5</span>
-                        </div>
-                        <p className="text-sm text-gray-600 line-clamp-3">{review.review}</p>
-                        {review.adminComment && (
-                          <div className="p-2 mt-2 text-sm text-gray-500 rounded bg-gray-50">
-                            <span className="font-medium">Admin Note:</span> {review.adminComment}
-                          </div>
-                        )}
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex flex-col space-y-2">
-                          {getStatusBadge(review.status)}
-                          {review.hidden && (
-                            <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded">
-                              <EyeOff className="w-3 h-3" />
-                              Hidden
-                            </span>
-                          )}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        {new Date(review.createdAt).toLocaleDateString()}
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
-                        <div className="flex flex-col space-y-2">
-                          {review.status === 'pending' && (
-                            <>
-                              <button
-                                onClick={() => updateReviewStatus(review._id, 'approved')}
-                                className="inline-flex items-center px-3 py-1 text-xs text-green-700 transition-colors bg-green-100 rounded hover:bg-green-200"
-                              >
-                                <CheckCircle className="w-3 h-3 mr-1" />
-                                Approve
-                              </button>
-                              <button
-                                onClick={() => {
-                                  const comment = prompt("Rejection reason (optional):");
-                                  updateReviewStatus(review._id, 'rejected', comment || '');
-                                }}
-                                className="inline-flex items-center px-3 py-1 text-xs text-red-700 transition-colors bg-red-100 rounded hover:bg-red-200"
-                              >
-                                <XCircle className="w-3 h-3 mr-1" />
-                                Reject
-                              </button>
-                            </>
-                          )}
-                          
-                          <button
-                            onClick={() => toggleVisibility(review._id, review.hidden)}
-                            className="inline-flex items-center px-3 py-1 text-xs text-blue-700 transition-colors bg-blue-100 rounded hover:bg-blue-200"
-                          >
-                            {review.hidden ? (
-                              <>
-                                <Eye className="w-3 h-3 mr-1" />
-                                Show
-                              </>
-                            ) : (
-                              <>
-                                <EyeOff className="w-3 h-3 mr-1" />
-                                Hide
-                              </>
-                            )}
-                          </button>
-                          
-                          <button
-                            onClick={() => deleteReview(review._id)}
-                            className="inline-flex items-center px-3 py-1 text-xs text-gray-700 transition-colors bg-gray-100 rounded hover:bg-gray-200"
-                          >
-                            <Trash2 className="w-3 h-3 mr-1" />
-                            Delete
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-
-          {/* Pagination */}
-          {!loading && reviews.length > 0 && (
-            <div className="px-6 py-4 border-t border-gray-200">
-              <div className="flex items-center justify-between">
-                <div className="text-sm text-gray-700">
-                  Showing page {pagination.page} of {pagination.totalPages}
-                </div>
-                <div className="flex space-x-2">
-                  <button
-                    onClick={() => setFilters({ ...filters, page: filters.page - 1 })}
-                    disabled={filters.page === 1}
-                    className={`px-3 py-1 rounded border ${
-                      filters.page === 1
-                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                        : 'bg-white text-gray-700 hover:bg-gray-50'
-                    }`}
-                  >
-                    Previous
-                  </button>
-                  <button
-                    onClick={() => setFilters({ ...filters, page: filters.page + 1 })}
-                    disabled={filters.page >= pagination.totalPages}
-                    className={`px-3 py-1 rounded border ${
-                      filters.page >= pagination.totalPages
-                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                        : 'bg-white text-gray-700 hover:bg-gray-50'
-                    }`}
-                  >
-                    Next
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+    <div className="space-y-6">
+      {/* Page Header */}
+      <div>
+        <Title level={2} className="!mb-1 !text-slate-100">Customer Reviews</Title>
+        <Text className="text-slate-400">Manage and moderate product reviews</Text>
       </div>
+
+      {/* Stats Cards */}
+      <Row gutter={[16, 16]}>
+        <Col xs={24} sm={8}>
+          <Card className="border-0 shadow-sm bg-slate-800">
+            <div className="flex items-center justify-between">
+              <div>
+                <Text className="text-slate-400">Pending Reviews</Text>
+                <Title level={2} className="!mt-1 !mb-0 !text-slate-100">
+                  {reviews.filter(r => r.status === 'pending').length}
+                </Title>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-700">
+                <ClockCircleOutlined className="text-2xl text-yellow-500" />
+              </div>
+            </div>
+          </Card>
+        </Col>
+        <Col xs={24} sm={8}>
+          <Card className="border-0 shadow-sm bg-slate-800">
+            <div className="flex items-center justify-between">
+              <div>
+                <Text className="text-slate-400">Approved Reviews</Text>
+                <Title level={2} className="!mt-1 !mb-0 !text-slate-100">
+                  {reviews.filter(r => r.status === 'approved').length}
+                </Title>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-700">
+                <CheckCircleOutlined className="text-2xl text-green-500" />
+              </div>
+            </div>
+          </Card>
+        </Col>
+        <Col xs={24} sm={8}>
+          <Card className="border-0 shadow-sm bg-slate-800">
+            <div className="flex items-center justify-between">
+              <div>
+                <Text className="text-slate-400">Total Reviews</Text>
+                <Title level={2} className="!mt-1 !mb-0 !text-slate-100">
+                  {reviews.length}
+                </Title>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-700">
+                <AlertOutlined className="text-2xl text-cyan-500" />
+              </div>
+            </div>
+          </Card>
+        </Col>
+      </Row>
+
+      {/* Filters and Table */}
+      <Card className="border-0 shadow-sm bg-slate-800">
+        <div className="flex flex-col gap-4 mb-6 sm:flex-row">
+          <Search
+            placeholder="Search by name, email, or review content..."
+            allowClear
+            onSearch={(value) => setFilters(prev => ({ ...prev, search: value, page: 1 }))}
+            style={{ maxWidth: 400 }}
+            size="large"
+            className="flex-1"
+          />
+          <Select
+            value={filters.status}
+            onChange={(value) => setFilters(prev => ({ ...prev, status: value, page: 1 }))}
+            style={{ width: 200 }}
+            size="large"
+            options={[
+              { value: 'all', label: 'All Status' },
+              { value: 'pending', label: 'Pending' },
+              { value: 'approved', label: 'Approved' },
+              { value: 'rejected', label: 'Rejected' },
+            ]}
+            suffixIcon={<FilterOutlined />}
+          />
+        </div>
+
+        <Table
+          columns={columns}
+          dataSource={reviews}
+          rowKey="_id"
+          loading={loading}
+          pagination={{
+            current: filters.page,
+            pageSize: 10,
+            total: pagination.total,
+            onChange: (page) => setFilters(prev => ({ ...prev, page }))
+          }}
+          className="overflow-hidden"
+        />
+      </Card>
     </div>
   );
 }

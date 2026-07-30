@@ -812,7 +812,7 @@ export default function AddProductForm() {
               </Descriptions.Item>
               <Descriptions.Item label="Short Description">
                 {formData.description ? (
-                  <div className="p-2 overflow-y-auto rounded max-h-32 bg-gray-50">
+                  <div className="p-2 overflow-y-auto rounded max-h-32 bg-slate-700">
                     {formData.description}
                   </div>
                 ) : (
@@ -858,7 +858,7 @@ export default function AddProductForm() {
               </Descriptions.Item>
               <Descriptions.Item label="Detailed Description" span={2}>
                 {formData.detailedDescription ? (
-                  <div className="p-2 overflow-y-auto rounded max-h-32 bg-gray-50">
+                  <div className="p-2 overflow-y-auto rounded max-h-32 bg-slate-700">
                     {formData.detailedDescription}
                   </div>
                 ) : (
@@ -946,7 +946,7 @@ export default function AddProductForm() {
   };
 
   return (
-    <div className="min-h-screen p-4 bg-gray-50 md:p-6">
+    <div className="min-h-screen p-4 bg-slate-700 md:p-6">
       {/* Header */}
       <div className="mb-6">
         <Button 
@@ -961,7 +961,7 @@ export default function AddProductForm() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-gray-800">Add New Product</h1>
-            <p className="text-gray-500">Create a new product for your store</p>
+            <p className="text-slate-400">Create a new product for your store</p>
           </div>
           
           <Space>

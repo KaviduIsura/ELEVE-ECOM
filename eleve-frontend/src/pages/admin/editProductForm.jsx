@@ -619,7 +619,7 @@ export default function EditProductForm() {
                           />
                         ]}
                       >
-                        <p className="text-xs text-center text-gray-500">
+                        <p className="text-xs text-center text-slate-400">
                           Image {index + 1}
                         </p>
                       </Card>
@@ -930,7 +930,7 @@ export default function EditProductForm() {
   };
 
   return (
-    <div className="min-h-screen p-4 bg-gray-50 md:p-6">
+    <div className="min-h-screen p-4 bg-slate-700 md:p-6">
       {/* Header */}
       <div className="mb-6">
         <Button 
@@ -945,7 +945,7 @@ export default function EditProductForm() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-gray-800">Edit Product</h1>
-            <p className="text-gray-500">Update product: {product?.productName}</p>
+            <p className="text-slate-400">Update product: {product?.productName}</p>
           </div>
           
           <Space>
