@@ -31,7 +31,7 @@ const reviewSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'approved', 'rejected'],
+    enum: ['pending', 'approved', 'rejected', 'flagged'],
     default: 'pending'
   },
   hidden: {
@@ -39,6 +39,20 @@ const reviewSchema = new mongoose.Schema({
     default: false,
   },
   adminComment: {
+    type: String,
+    default: ''
+  },
+  // AI Analysis fields
+  sentiment: {
+    type: String,
+    enum: ['positive', 'neutral', 'negative', 'unanalyzed'],
+    default: 'unanalyzed'
+  },
+  flagged: {
+    type: Boolean,
+    default: false
+  },
+  flagReason: {
     type: String,
     default: ''
   }

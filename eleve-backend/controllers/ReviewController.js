@@ -1,8 +1,8 @@
-// controllers/ReviewController.js
 import mongoose from "mongoose";
 import Review from "../models/Review.js";
 import Product from "../models/Product.js";
 import { isAdmin, isCustomer } from "./UserController.js";
+import { analyzeReview } from "./AIController.js";
 
 // Add review for a product
 export async function saveReviews(req, res) {
@@ -50,13 +50,21 @@ export async function saveReviews(req, res) {
       });
     }
 
+    // Run AI analysis silently — never blocks submission if AI fails
+    const aiResult = await analyzeReview(review, rating);
+
     const newReview = new Review({
       productId,
       email: user.email,
       userName: userName || user.firstName || user.email.split('@')[0],
       review,
       rating,
-      status: 'pending' // Set as pending by default
+      // Auto-flag if AI detected spam/profanity, otherwise set pending
+      status: aiResult.flagged ? 'flagged' : 'pending',
+      // Persist AI analysis results
+      sentiment: aiResult.sentiment,
+      flagged: aiResult.flagged,
+      flagReason: aiResult.flagReason
     });
 
     await newReview.save();
@@ -264,7 +272,8 @@ export async function getAllReviews(req, res) {
       limit = 20, 
       status, 
       productId,
-      search 
+      search,
+      sentiment 
     } = req.query;
     
     const pageNum = parseInt(page);
@@ -288,6 +297,15 @@ export async function getAllReviews(req, res) {
         { userName: { $regex: search, $options: 'i' } },
         { review: { $regex: search, $options: 'i' } }
       ];
+    }
+
+    // Handle sentiment filter ('flagged' maps to status, others map to sentiment field)
+    if (sentiment && sentiment !== 'all') {
+      if (sentiment === 'flagged') {
+        query.status = 'flagged';
+      } else {
+        query.sentiment = sentiment;
+      }
     }
 
     const reviews = await Review.find(query)
