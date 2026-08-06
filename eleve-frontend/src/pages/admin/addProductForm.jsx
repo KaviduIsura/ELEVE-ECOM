@@ -536,11 +536,31 @@ export default function AddProductForm() {
                 <Form.Item
                   label="Short Description"
                   name="description"
-                  rules={[{ required: true, message: 'Please enter description' }]}
+                  rules={[
+                    { required: true, message: 'Please enter short description' },
+                    {
+                      validator: (_, value) => {
+                        if (!value) return Promise.resolve();
+                        const wordCount = value.trim().split(/\s+/).filter(Boolean).length;
+                        if (wordCount > 50) {
+                          return Promise.reject(new Error(`Short description cannot exceed 50 words (currently ${wordCount} words)`));
+                        }
+                        return Promise.resolve();
+                      }
+                    }
+                  ]}
+                  extra={
+                    <div className="flex justify-between text-xs text-slate-400 mt-1">
+                      <span>Brief summary for product cards and overview (max 50 words)</span>
+                      <span>
+                        {formData.description ? formData.description.trim().split(/\s+/).filter(Boolean).length : 0} / 50 words
+                      </span>
+                    </div>
+                  }
                 >
                   <TextArea 
                     rows={3}
-                    placeholder="Brief description for product cards"
+                    placeholder="Brief description for product cards (max 50 words)"
                     size="large"
                     onChange={(e) => {
                       setFormData(prev => ({ ...prev, description: e.target.value }));
@@ -568,7 +588,7 @@ export default function AddProductForm() {
                 >
                   <TextArea 
                     rows={6}
-                    placeholder="Full product description for detail page (HTML allowed)"
+                    placeholder="Full product description for detail page"
                     size="large"
                     onChange={(e) => {
                       setFormData(prev => ({ ...prev, detailedDescription: e.target.value }));
@@ -916,7 +936,7 @@ export default function AddProductForm() {
               </Descriptions.Item>
               <Descriptions.Item label="Detailed Description" span={2}>
                 {formData.detailedDescription ? (
-                  <div className="p-2 overflow-y-auto rounded max-h-32 bg-slate-700">
+                  <div className="p-2 overflow-y-auto rounded max-h-32 bg-slate-700 whitespace-pre-line">
                     {formData.detailedDescription}
                   </div>
                 ) : (

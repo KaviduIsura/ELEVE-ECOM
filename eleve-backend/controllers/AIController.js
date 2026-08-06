@@ -26,8 +26,8 @@ export const generateProductDescription = async (req, res) => {
     const systemPrompt = `You are a world-class luxury copywriter for ELEVÉ, a premium beauty and fragrance e-commerce brand.
 Your task is to write a short, evocative, storytelling-heavy product description suitable for a high-end storefront. 
 Use rich, sensory language that sells an experience, not just a product. 
-Keep it concise (around 3-4 short paragraphs). Use HTML formatting like <p> and <strong> where appropriate to make it look beautiful on the website.
-Do not use markdown formatting outside of HTML.
+Keep it concise (around 3-4 short paragraphs).
+IMPORTANT: Output pure, normal plain text ONLY. Do NOT use any HTML tags (such as <p>, <strong>, <span>, <div>, <br>) or markdown formatting (such as **, ##, *). Separate paragraphs with clean double line breaks (\n\n).
 
 Product Details:
 ${contextStr}`;
@@ -42,9 +42,15 @@ ${contextStr}`;
       max_tokens: 500,
     });
 
-    const generatedText = completion.choices[0].message.content;
+    const generatedText = completion.choices[0].message.content || "";
 
-    return res.status(200).json({ success: true, description: generatedText });
+    // Clean up any stray HTML tags or markdown bold formatting
+    const cleanedText = generatedText
+      .replace(/<[^>]*>/g, '') // strip HTML tags
+      .replace(/\*\*(.*?)\*\*/g, '$1') // strip markdown bold
+      .trim();
+
+    return res.status(200).json({ success: true, description: cleanedText });
   } catch (error) {
     console.error("AI Generation Error:", error);
     return res.status(500).json({ success: false, message: "Failed to generate description", error: error.message });

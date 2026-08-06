@@ -460,6 +460,44 @@ export default function ProductOverview() {
     }
   };
 
+  // Format and limit short description to word limit (e.g. 50 words)
+  const formatShortDescription = (str, wordLimit = 50) => {
+    if (!str) return '';
+    const cleaned = str.replace(/<[^>]*>/g, '').trim();
+    const words = cleaned.split(/\s+/).filter(Boolean);
+    if (words.length <= wordLimit) return cleaned;
+    return words.slice(0, wordLimit).join(' ') + '...';
+  };
+
+  // Helper to render descriptions as clean normal text paragraphs without raw HTML tags
+  const renderFormattedDescription = (text) => {
+    if (!text) return null;
+
+    // Remove any HTML tags like <p>, <strong>, etc., converting <p> linebreaks to clean newlines
+    let cleaned = text
+      .replace(/<p[^>]*>/gi, '')
+      .replace(/<\/p>/gi, '\n\n')
+      .replace(/<br\s*\/?>/gi, '\n')
+      .replace(/<[^>]*>/g, '')
+      .trim();
+
+    // Split into paragraphs by double or single line breaks
+    const paragraphs = cleaned
+      .split(/\n\s*\n/)
+      .map(p => p.trim())
+      .filter(Boolean);
+
+    if (paragraphs.length === 0) {
+      return <p className="leading-relaxed text-gray-700 font-light">{cleaned}</p>;
+    }
+
+    return paragraphs.map((paragraph, idx) => (
+      <p key={idx} className="leading-relaxed text-gray-700 font-light mb-4 last:mb-0">
+        {paragraph}
+      </p>
+    ));
+  };
+
   // Handle write review button click
   const handleWriteReviewClick = () => {
     const token = localStorage.getItem('token');
@@ -703,7 +741,7 @@ export default function ProductOverview() {
             {/* Short Description */}
             <div className="py-4 border-gray-100 border-y">
               <p className="leading-relaxed text-gray-600">
-                {product.description}
+                {formatShortDescription(product.description, 50)}
               </p>
             </div>
 
@@ -840,6 +878,25 @@ export default function ProductOverview() {
             </div>
           </div>
         </div>
+
+        {/* Product Overview / Detailed Description */}
+        {product.longDescription && (
+          <div className="mt-16 pt-12 border-t border-gray-100">
+            <div className="max-w-4xl mx-auto">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2.5 rounded-full bg-amber-50 text-amber-600">
+                  <Sparkles className="w-5 h-5" />
+                </div>
+                <h2 className="text-2xl font-light tracking-wide text-gray-900">Product Overview</h2>
+              </div>
+              <div className="p-8 bg-gradient-to-br from-amber-50/20 via-white to-gray-50/40 border border-gray-100 rounded-2xl shadow-sm">
+                <div className="space-y-4 text-gray-700 leading-relaxed font-light text-base">
+                  {renderFormattedDescription(product.longDescription)}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Customer Reviews Section */}
         <div className="mt-16">
