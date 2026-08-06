@@ -534,6 +534,36 @@ export default function AddProductForm() {
               
               <Col span={24}>
                 <Form.Item
+                  label="Tags"
+                  name="tags"
+                >
+                  <Input 
+                    placeholder="e.g., premium, natural, luxury (comma separated)"
+                    size="large"
+                    onChange={(e) => {
+                      setFormData(prev => ({ ...prev, tags: e.target.value }));
+                    }}
+                  />
+                </Form.Item>
+              </Col>
+              
+              <Col span={24}>
+                <Form.Item
+                  label="Alternative Names"
+                  name="altNames"
+                >
+                  <Input 
+                    placeholder="e.g., Alternative 1, Alternative 2 (comma separated)"
+                    size="large"
+                    onChange={(e) => {
+                      setFormData(prev => ({ ...prev, altNames: e.target.value }));
+                    }}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col span={24}>
+                <Form.Item
                   label="Short Description"
                   name="description"
                   rules={[
@@ -592,36 +622,6 @@ export default function AddProductForm() {
                     size="large"
                     onChange={(e) => {
                       setFormData(prev => ({ ...prev, detailedDescription: e.target.value }));
-                    }}
-                  />
-                </Form.Item>
-              </Col>
-              
-              <Col span={24}>
-                <Form.Item
-                  label="Tags"
-                  name="tags"
-                >
-                  <Input 
-                    placeholder="e.g., premium, natural, luxury (comma separated)"
-                    size="large"
-                    onChange={(e) => {
-                      setFormData(prev => ({ ...prev, tags: e.target.value }));
-                    }}
-                  />
-                </Form.Item>
-              </Col>
-              
-              <Col span={24}>
-                <Form.Item
-                  label="Alternative Names"
-                  name="altNames"
-                >
-                  <Input 
-                    placeholder="e.g., Alternative 1, Alternative 2 (comma separated)"
-                    size="large"
-                    onChange={(e) => {
-                      setFormData(prev => ({ ...prev, altNames: e.target.value }));
                     }}
                   />
                 </Form.Item>
